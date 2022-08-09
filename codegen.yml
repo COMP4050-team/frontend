@@ -1,0 +1,9 @@
+overwrite: true
+schema: "https://comp4050-square-api.fly.dev/query"
+documents: "gql/**/*.graphql"
+generates:
+  gql/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typed-document-node"

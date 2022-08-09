@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { useQuery } from '@apollo/client';
-import { GET_UNITS } from '../gql/queries/getUnits';
+import { useQuery } from 'urql';
+import { GetUnitsDocument, GetUnitsQuery } from '../gql/generated/graphql';
 
 const Home: NextPage = () => {
-  const { loading, error, data } = useQuery(GET_UNITS);
+  const [result] = useQuery<GetUnitsQuery>({ query: GetUnitsDocument });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (result.fetching) return <p>Loading...</p>;
+  if (result.error) return <p>Error :(</p>;
 
   return (
     <div className={styles.container}>
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
       <h1 className={styles.title}>Units</h1>
 
       <div>
-        {data.units.map(({ id, name }: { id: number; name: string }) => (
+        {result.data?.units.map(({ id, name }) => (
           <div key={id}>
             <h3 className={styles.title}>{name}</h3>
           </div>
