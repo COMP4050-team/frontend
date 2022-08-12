@@ -4,7 +4,10 @@ import { createClient, Provider } from 'urql';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const client = createClient({
-    url: 'https://comp4050-square-api.fly.dev/query',
+    url:
+      process.env.NODE_ENV === 'production'
+        ? 'https://comp4050-square-api.fly.dev/query'
+        : 'http://localhost:8080/query',
   });
 
   return (

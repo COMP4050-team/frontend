@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "graphql-codegen",
-    "generate-dev": "graphql-codegen -c ./codegen.dev.yml"
+    "generate-dev": "graphql-codegen"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity": "^3.145.0",
