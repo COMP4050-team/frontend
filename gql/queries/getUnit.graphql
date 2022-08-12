@@ -1,0 +1,10 @@
+query getUnit($id: ID!) {
+  unit(id: $id) {
+    id
+    name
+    classes {
+      id
+      name
+    }
+  }
+}

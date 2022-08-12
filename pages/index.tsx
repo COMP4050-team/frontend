@@ -3,6 +3,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { useQuery } from 'urql';
 import { GetUnitsDocument, GetUnitsQuery } from '../gql/generated/graphql';
+import Link from 'next/link';
 
 const Home: NextPage = () => {
   const [result] = useQuery<GetUnitsQuery>({ query: GetUnitsDocument });
@@ -23,7 +24,11 @@ const Home: NextPage = () => {
       <div>
         {result.data?.units.map(({ id, name }) => (
           <div key={id}>
-            <h3 className={styles.title}>{name}</h3>
+            <Link href={`/unit/${id}`}>
+              <a>
+                <h3 className={styles.title}>{name}</h3>
+              </a>
+            </Link>
           </div>
         ))}
       </div>

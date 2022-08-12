@@ -1,0 +1,17 @@
+query getAssignment($id: ID!) {
+  assignment(id: $id) {
+    id
+    name
+    tests {
+      id
+      name
+    }
+    submissions {
+      id
+      studentID
+      result {
+        id
+      }
+    }
+  }
+}

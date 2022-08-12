@@ -1,0 +1,11 @@
+query getClass($id: ID!) {
+  class(id: $id) {
+    id
+    name
+    assignments {
+      id
+      name
+      dueDate
+    }
+  }
+}

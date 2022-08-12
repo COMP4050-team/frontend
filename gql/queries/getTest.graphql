@@ -1,0 +1,6 @@
+query getTest($id: ID!) {
+  test(id: $id) {
+    id
+    name
+  }
+}
