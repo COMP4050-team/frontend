@@ -33,7 +33,6 @@ const UploadTest: NextPage = () => {
       return;
     }
 
-    var reader = new FileReader();
     const uploadParams = {
       Bucket: uploadsBucketName,
       Key: uploadedFile.name,
@@ -41,11 +40,10 @@ const UploadTest: NextPage = () => {
     };
 
     try {
-      const data = await s3.send(new PutObjectCommand(uploadParams));
-      alert('Successfully uploaded photo.');
-      // viewAlbum(albumName);
+      await s3.send(new PutObjectCommand(uploadParams));
+      alert('Successfully uploaded file.');
     } catch (err: any) {
-      return alert('There was an error uploading your photo: ' + err.message);
+      return alert('There was an error uploading your file: ' + err.message);
     }
   };
 
