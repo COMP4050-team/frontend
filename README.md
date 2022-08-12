@@ -13,7 +13,7 @@ yarn
 First, run the backend:
 
 ```
-git clone
+git clone git@github.com:COMP4050-team/api.git
 make run
 ```
 
