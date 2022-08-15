@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     url:
       process.env.NODE_ENV === 'production'
         ? 'https://comp4050-square-api.fly.dev/query'
-        : 'http://localhost:8080/query',
+        : 'http://localhost:8000/query',
   });
 
   return (
