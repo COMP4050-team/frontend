@@ -2,11 +2,12 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { useQuery } from 'urql';
-import { GetUnitsDocument, GetUnitsQuery } from '../gql/generated/graphql';
+import { GetUnitsDocument, GetUnitsQuery, MyTestQueryDocument, MyTestQueryQuery } from '../gql/generated/graphql';
 import Link from 'next/link';
 
 const Home: NextPage = () => {
   const [result] = useQuery<GetUnitsQuery>({ query: GetUnitsDocument });
+  const [testResult] = useQuery<MyTestQueryQuery>({ query: MyTestQueryDocument, variables: {id: "1"}});
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;
@@ -20,6 +21,7 @@ const Home: NextPage = () => {
       </Head>
 
       <h1 className={styles.title}>Units</h1>
+      <h1 className={styles.title}>{testResult.data?.myTestQuery?.name}</h1>
 
       <div>
         {result.data?.units.map(({ id, name }) => (
