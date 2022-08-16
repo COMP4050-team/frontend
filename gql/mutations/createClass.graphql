@@ -1,0 +1,6 @@
+mutation createClass($class: NewClass!) {
+  createClass(input: $class) {
+    id
+    name
+  }
+}
