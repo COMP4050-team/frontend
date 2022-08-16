@@ -7,6 +7,7 @@ import {
 } from '../../gql/generated/graphql';
 import { useRouter } from 'next/router';
 import { CustomList } from '../../components/CustomList';
+import { Typography } from '@mui/material';
 
 const UnitPage: NextPage = () => {
   const router = useRouter();
@@ -20,7 +21,10 @@ const UnitPage: NextPage = () => {
   if (result.error) return <p>Error :(</p>;
 
   return (
-    <div className='container'>
+    <>
+      <Typography align='center' variant='h3'>
+        {result.data?.unit?.name}
+      </Typography>
       <CustomList
         items={
           result.data?.unit?.classes.map((class_) => {
@@ -31,7 +35,7 @@ const UnitPage: NextPage = () => {
           }) ?? []
         }
       />
-    </div>
+    </>
   );
 };
 
