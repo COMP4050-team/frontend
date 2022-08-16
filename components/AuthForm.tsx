@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styles from './AuthForm.module.css';
 import axios from 'axios';
 
 interface AuthFormProps {
@@ -26,6 +25,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isRegister }) => {
       );
 
       if (res.status === 200) {
+        localStorage.setItem('loggedIn', 'true');
         window.location.href = '/';
       }
     } catch (error: any) {
@@ -34,31 +34,32 @@ const AuthForm: React.FC<AuthFormProps> = ({ isRegister }) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      {/* Display the error if it exists */}
-      {error && <p className={styles.error}>{error}</p>}
+    <form onSubmit={handleSubmit}>
+      <div className='flex flex-col items-center justify-center lg:justify-start gap-4'>
+        {/* Display the error if it exists */}
+        {error && <p className='text-red-600'>{error}</p>}
 
-      <label className={styles.label}>
-        Email
-        <input
-          className={styles.input}
-          type='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </label>
-      <label className={styles.label}>
-        Password
-        <input
-          className={styles.input}
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <button className={styles.button} type='submit'>
-        {isRegister ? 'Register' : 'Login'}
-      </button>
+        <label>
+          Email
+          <input
+            type='email'
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className='form-control block w-full px-4 py-2 text-xl font-normal bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-600 focus:outline-none text-gray-800'
+          />
+        </label>
+
+        <label>
+          Password
+          <input
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className='form-control block w-full px-4 py-2 text-xl font-normal  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:bg-white focus:border-blue-600 focus:outline-none text-gray-800'
+          />
+        </label>
+        <button type='submit'>{isRegister ? 'Register' : 'Login'}</button>
+      </div>
     </form>
   );
 };

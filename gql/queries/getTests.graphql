@@ -1,0 +1,6 @@
+query getTests {
+  tests {
+    id
+    name
+  }
+}

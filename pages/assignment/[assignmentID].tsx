@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
-import styles from '../../../../../../styles/Home.module.css';
 import { useQuery } from 'urql';
 import {
   GetAssignmentDocument,
   GetAssignmentQuery,
   GetAssignmentQueryVariables,
-} from '../../../../../../gql/generated/graphql';
+} from '../../gql/generated/graphql';
 import { useRouter } from 'next/router';
+import { CustomList } from '../../components/CustomList';
 
-const ClassPage: NextPage = () => {
+const AssignmentPage: NextPage = () => {
   const router = useRouter();
   const { assignmentID } = router.query;
   const [result] = useQuery<GetAssignmentQuery, GetAssignmentQueryVariables>({
@@ -20,19 +20,19 @@ const ClassPage: NextPage = () => {
   if (result.error) return <p>Error :(</p>;
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}> </h1>
-
-      <h3 className={styles.title}>{result.data?.assignment?.name}</h3>
-      {result.data?.assignment?.tests.map((test) => (
-        <div key={test.id}>
-          <h3>
-            {test.id} - {test.name}
-          </h3>
-        </div>
-      ))}
+    <div className='container'>
+      <CustomList
+        items={
+          result.data?.assignment?.tests.map((test) => {
+            return {
+              text: test.name,
+              href: `/test/${test.id}`,
+            };
+          }) ?? []
+        }
+      />
     </div>
   );
 };
 
-export default ClassPage;
+export default AssignmentPage;
