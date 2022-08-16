@@ -1,19 +1,19 @@
 import type { NextPage } from 'next';
 import { useQuery } from 'urql';
 import {
-  GetUnitDocument,
-  GetUnitQuery,
-  GetUnitQueryVariables,
+  GetClassDocument,
+  GetClassQuery,
+  GetClassQueryVariables,
 } from '../../gql/generated/graphql';
 import { useRouter } from 'next/router';
 import { CustomList } from '../../components/CustomList';
 
-const UnitPage: NextPage = () => {
+const ClassPage: NextPage = () => {
   const router = useRouter();
-  const { unitID } = router.query;
-  const [result] = useQuery<GetUnitQuery, GetUnitQueryVariables>({
-    query: GetUnitDocument,
-    variables: { id: unitID as string },
+  const { classID } = router.query;
+  const [result] = useQuery<GetClassQuery, GetClassQueryVariables>({
+    query: GetClassDocument,
+    variables: { id: classID as string },
   });
 
   if (result.fetching) return <p>Loading...</p>;
@@ -23,10 +23,10 @@ const UnitPage: NextPage = () => {
     <div className='container'>
       <CustomList
         items={
-          result.data?.unit?.classes.map((class_) => {
+          result.data?.class?.assignments.map((assignment) => {
             return {
-              text: class_.name,
-              href: `/class/${class_.id}`,
+              text: assignment.name,
+              href: `/assignment/${assignment.id}`,
             };
           }) ?? []
         }
@@ -35,4 +35,4 @@ const UnitPage: NextPage = () => {
   );
 };
 
-export default UnitPage;
+export default ClassPage;

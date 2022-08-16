@@ -1,0 +1,6 @@
+query getAssignments {
+  assignments {
+    id
+    name
+  }
+}

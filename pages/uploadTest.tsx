@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 
 // Set the AWS Region
 const REGION = 'ap-southeast-2'; //REGION
