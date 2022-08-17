@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { useQuery } from 'urql';
-import { GetUnitsDocument, GetUnitsQuery } from '../gql/generated/graphql';
+import { GetUnitsDocument } from '../gql/generated/graphql';
 import { Typography } from '@mui/material';
 
 const Home: NextPage = () => {
-  const [result] = useQuery<GetUnitsQuery>({ query: GetUnitsDocument });
+  const [result] = useQuery({ query: GetUnitsDocument });
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;

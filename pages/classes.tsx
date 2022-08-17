@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import { useQuery } from 'urql';
-import { GetClassesDocument, GetClassesQuery } from '../gql/generated/graphql';
+import { GetClassesDocument } from '../gql/generated/graphql';
 import { CustomList } from '../components/CustomList';
 import { Typography } from '@mui/material';
 
 const ClassesPage: NextPage = () => {
-  const [result] = useQuery<GetClassesQuery>({
+  const [result] = useQuery({
     query: GetClassesDocument,
   });
 

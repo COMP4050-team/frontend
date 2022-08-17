@@ -2,13 +2,12 @@ import type { NextPage } from 'next';
 import { useQuery } from 'urql';
 import {
   GetAssignmentsDocument,
-  GetAssignmentsQuery,
 } from '../gql/generated/graphql';
 import { CustomList } from '../components/CustomList';
 import { Typography } from '@mui/material';
 
 const AssignmentsPage: NextPage = () => {
-  const [result] = useQuery<GetAssignmentsQuery>({
+  const [result] = useQuery({
     query: GetAssignmentsDocument,
   });
 
@@ -25,7 +24,7 @@ const AssignmentsPage: NextPage = () => {
           result.data?.assignments.map((assignment) => {
             return {
               text: assignment.name,
-              href: `/units/${assignment.id}`,
+              href: `/assignment/${assignment.id}`,
             };
           }) ?? []
         }

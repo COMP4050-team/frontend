@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import { useQuery } from 'urql';
-import { GetTestsDocument, GetTestsQuery } from '../gql/generated/graphql';
+import { GetTestsDocument } from '../gql/generated/graphql';
 import { CustomList } from '../components/CustomList';
 import { Typography } from '@mui/material';
 
 const TestsPage: NextPage = () => {
-  const [result] = useQuery<GetTestsQuery>({
+  const [result] = useQuery({
     query: GetTestsDocument,
   });
 
@@ -22,7 +22,7 @@ const TestsPage: NextPage = () => {
           result.data?.tests.map((test) => {
             return {
               text: test.name,
-              href: `/tests/${test.id}`,
+              href: `/test/${test.id}`,
             };
           }) ?? []
         }
