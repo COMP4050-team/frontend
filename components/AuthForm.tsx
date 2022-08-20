@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { Button } from '@mui/material';
 
 interface AuthFormProps {
   isRegister?: boolean;
@@ -58,7 +59,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ isRegister }) => {
             className='form-control block w-full px-4 py-2 text-xl font-normal  bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0  focus:bg-white focus:border-blue-600 focus:outline-none text-gray-800'
           />
         </label>
-        <button type='submit'>{isRegister ? 'Register' : 'Login'}</button>
+        <Button type='submit'>{isRegister ? 'Register' : 'Login'}</Button>
       </div>
     </form>
   );
