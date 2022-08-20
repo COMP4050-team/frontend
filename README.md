@@ -17,7 +17,7 @@ git clone git@github.com:COMP4050-team/api.git
 make run
 ```
 
-This will start the GraphQL API locally on port 8000.
+This will start the GraphQL API locally on port 8081.
 Then start the front end in hot reload mode.
 
 ```bash
@@ -26,7 +26,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can interact with the GraphQL API via your browser by visiting http://localhost:8000
+You can interact with the GraphQL API via your browser by visiting http://localhost:8081
 
 ---
 
