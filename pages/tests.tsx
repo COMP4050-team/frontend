@@ -50,7 +50,8 @@ const TestsPage: NextPage = () => {
   );
 };
 
-const TestFile = ({ studentName, assignment, testsPassed, testsFailed, totalGrade }) => {
+const TestFile = ({ studentName, assignment, testsPassed, testsFailed, totalGrade }
+  : {studentName:string; assignment:string; testsPassed: number; testsFailed: number; totalGrade: number}) => {
   if(!studentName) return <div />;
   return (
     <table>
