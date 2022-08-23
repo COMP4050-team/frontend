@@ -71,6 +71,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           ? 'https://comp4050-square-api.fly.dev/query'
           : 'http://localhost:8081/query',
       exchanges: [
+        // @ts-ignore-next-line
         authExchange({
           addAuthToOperation,
           getAuth,
