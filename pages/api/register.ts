@@ -35,17 +35,12 @@ export default async function handler(
   }
 
   if (gqlResponse.data?.register) {
-    res.setHeader(
-      'Set-Cookie',
-      serialize('token', gqlResponse.data.register, {
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // one day
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
-      }),
-    );
+    return res.status(200).json({
+      token: gqlResponse.data.register,
+    });
+  } else {
+    return res.status(500).json({
+      error: 'No token returned from API',
+    });
   }
-
-  return res.status(200).json({
-    success: true,
-  });
 }

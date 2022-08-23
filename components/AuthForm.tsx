@@ -26,6 +26,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ isRegister }) => {
       );
 
       if (res.status === 200) {
+        const token = res.data.token;
+        localStorage.setItem('token', token);
+
         localStorage.setItem('loggedIn', 'true');
         window.location.href = '/';
       }

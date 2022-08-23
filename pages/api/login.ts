@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { client } from '../../gql/client';
 import { LoginDocument } from '../../gql/generated/graphql';
-import { serialize } from 'cookie';
 
 export default async function handler(
   req: NextApiRequest,
@@ -35,17 +34,12 @@ export default async function handler(
   }
 
   if (gqlResponse.data?.login) {
-    res.setHeader(
-      'Set-Cookie',
-      serialize('token', gqlResponse.data.login, {
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // one day
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
-      }),
-    );
+    return res.status(200).json({
+      token: gqlResponse.data.login,
+    });
+  } else {
+    return res.status(500).json({
+      error: 'No token returned from API',
+    });
   }
-
-  return res.status(200).json({
-    success: true,
-  });
 }
