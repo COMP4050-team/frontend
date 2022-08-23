@@ -5,6 +5,8 @@ const Logout: NextPage = () => {
   useEffect(() => {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('token');
+
+    window.location.href = '/';
   }, []);
 
   return <></>;
