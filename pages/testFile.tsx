@@ -1,29 +1,32 @@
-import { Box } from '@mui/material';
-import { DataGrid} from "@mui/x-data-grid";
-// import { useState, useEffect } from 'react';
-let Data = require('../data.json');
-import TestDetails from "./testDetails";
+import type { NextPage } from 'next';
+export
 
-const columns = Data.columns;
-const rows = Data.rows;
-
-export const TestFile = () =>{
+const TestFile = ({ studentName, assignment, testsPassed, testsFailed, totalGrade }
+    : {studentName:string; assignment:string; testsPassed: number; testsFailed: number; totalGrade: number}) => {
+    if(!studentName) return <div />;
     return (
-        <Box
-            sx={{
-                height:400,
-                width:'100%'
-            }}
-        >
-            <DataGrid 
-                columns={columns} 
-                rows={rows}
-                pageSize={4}
-                rowsPerPageOptions={[4]} 
-            />
-            <TestDetails />
-        </Box>
-    )
+      <table>
+        <tbody>
+          <tr>
+            <td>
+              <h5>{studentName}</h5>
+            </td>
+            <td>
+              <h5>{assignment}</h5>
+            </td>
+            <td>
+              <h5>{testsPassed}</h5>
+            </td>
+            <td>
+              <h5>{testsFailed}</h5>
+            </td>
+            <td>
+              <h5>{totalGrade}</h5>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    );
   };
 
-  export default TestFile;
+export default TestFile;
