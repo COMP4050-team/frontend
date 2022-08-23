@@ -1,6 +1,13 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Provider, makeOperation, createClient, cacheExchange, dedupExchange, fetchExchange } from 'urql';
+import {
+  Provider,
+  makeOperation,
+  createClient,
+  cacheExchange,
+  dedupExchange,
+  fetchExchange,
+} from 'urql';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { ResponsiveDrawer } from '../components/ResponsiveDrawer';
 import { authExchange } from '@urql/exchange-auth';
@@ -24,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     operation: any;
   }) => {
     console.log(authState);
-    
+
     if (!authState || !authState.token) {
       return operation;
     }
@@ -88,17 +95,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     console.count('client created');
   }, [clientInitialised]);
 
-  return clientInitialised ? (
-    <Provider value={client}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ResponsiveDrawer>
-          <Component {...pageProps} />
-        </ResponsiveDrawer>
-      </ThemeProvider>
-    </Provider>
-  ) : (
-    <p>bad</p>
+  return (
+    clientInitialised && (
+      <Provider value={client}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <ResponsiveDrawer>
+            <Component {...pageProps} />
+          </ResponsiveDrawer>
+        </ThemeProvider>
+      </Provider>
+    )
   );
 }
 
