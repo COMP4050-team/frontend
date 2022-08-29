@@ -64,7 +64,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-// Adapted from https://mui.com/material-ui/react-drawer/#responsive-drawer
+// Adapted from https://mui.com/material-ui/react-drawer/#persistent-drawer
 export const ResponsiveDrawer: React.FC<AppBarProps> = ({children}) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
