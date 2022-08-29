@@ -1,19 +1,12 @@
-import axios from 'axios';
 import type { NextPage } from 'next';
 import { useEffect } from 'react';
 
 const Logout: NextPage = () => {
   useEffect(() => {
     localStorage.removeItem('loggedIn');
+    localStorage.removeItem('token');
 
-    axios
-      .get('/api/logout')
-      .then(() => {
-        window.location.href = '/';
-      })
-      .catch(() => {
-        console.error('Failed to logout');
-      });
+    window.location.href = '/';
   }, []);
 
   return <></>;
