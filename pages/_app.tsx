@@ -1,5 +1,5 @@
-import '../styles/globals.css';
-import type { AppProps } from 'next/app';
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
 import {
   Provider,
   makeOperation,
@@ -7,15 +7,15 @@ import {
   cacheExchange,
   dedupExchange,
   fetchExchange,
-} from 'urql';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { ResponsiveDrawer } from '../components/ResponsiveDrawer';
-import { authExchange } from '@urql/exchange-auth';
-import { useEffect, useState } from 'react';
+} from "urql";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { ResponsiveDrawer } from "../components/ResponsiveDrawer";
+import { authExchange } from "@urql/exchange-auth";
+import { useEffect, useState } from "react";
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
   },
 });
 
@@ -37,11 +37,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
 
     const fetchOptions =
-      typeof operation.context.fetchOptions === 'function'
+      typeof operation.context.fetchOptions === "function"
         ? operation.context.fetchOptions()
         : operation.context.fetchOptions || {};
 
-    console.log('addAuthToOperation', authState);
+    console.log("addAuthToOperation", authState);
 
     return makeOperation(operation.kind, operation, {
       ...operation.context,
@@ -57,7 +57,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const getAuth = async ({ authState }: { authState: any }) => {
     if (!authState) {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (token) {
         return { token };
       }
@@ -74,9 +74,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const newClient = createClient({
       url:
-        process.env.NODE_ENV === 'production'
-          ? 'https://comp4050-square-api.fly.dev/query'
-          : 'http://localhost:8081/query',
+        process.env.NODE_ENV === "production"
+          ? "https://comp4050-square-api.fly.dev/query"
+          : "http://localhost:8081/query",
       exchanges: [
         // @ts-ignore-next-line
         authExchange({
@@ -92,7 +92,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     setclientInitialised(true);
     setclient(newClient);
 
-    console.count('client created');
+    console.count("client created");
   }, [clientInitialised]);
 
   return (

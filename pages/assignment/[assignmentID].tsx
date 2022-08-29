@@ -1,11 +1,11 @@
-import type { NextPage } from 'next';
-import { useMutation, useQuery } from 'urql';
+import type { NextPage } from "next";
+import { useMutation, useQuery } from "urql";
 import {
   CreateTestDocument,
   GetAssignmentDocument,
-} from '../../gql/generated/graphql';
-import { useRouter } from 'next/router';
-import { CustomList } from '../../components/CustomList';
+} from "../../gql/generated/graphql";
+import { useRouter } from "next/router";
+import { CustomList } from "../../components/CustomList";
 import {
   Button,
   Dialog,
@@ -16,9 +16,9 @@ import {
   IconButton,
   TextField,
   Typography,
-} from '@mui/material';
-import { Add } from '@mui/icons-material';
-import { useState } from 'react';
+} from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { useState } from "react";
 
 const AssignmentPage: NextPage = () => {
   const router = useRouter();
@@ -29,7 +29,7 @@ const AssignmentPage: NextPage = () => {
   });
   const [createTestResult, createTest] = useMutation(CreateTestDocument);
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
-  const [newTestName, setNewTestName] = useState('');
+  const [newTestName, setNewTestName] = useState("");
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;
@@ -39,8 +39,8 @@ const AssignmentPage: NextPage = () => {
   };
 
   const handleAddTest = async () => {
-    if (!assignmentID || typeof assignmentID !== 'string') {
-      alert('No assignment ID');
+    if (!assignmentID || typeof assignmentID !== "string") {
+      alert("No assignment ID");
       return;
     }
 
@@ -51,24 +51,24 @@ const AssignmentPage: NextPage = () => {
         storagePath: `tests/${createTestResult.data?.createTest.assignmentID}/${createTestResult.data?.createTest.id}/${newTestName}`,
       },
     });
-    await reexecuteQuery({ requestPolicy: 'network-only' });
+    await reexecuteQuery({ requestPolicy: "network-only" });
     toggleAddTestDialog();
   };
 
   return (
     <>
-      <Typography align='center' variant='h3'>
+      <Typography align="center" variant="h3">
         {result.data?.assignment?.name}
       </Typography>
 
       <Dialog
         open={showAddTestDialog}
         onClose={toggleAddTestDialog}
-        aria-labelledby='form-dialog-title'
+        aria-labelledby="form-dialog-title"
         fullWidth
-        maxWidth='xs'
+        maxWidth="xs"
       >
-        <DialogTitle id='form-dialog-title'>
+        <DialogTitle id="form-dialog-title">
           Add a Test for this Assignment
         </DialogTitle>
         <DialogContent>
@@ -77,25 +77,25 @@ const AssignmentPage: NextPage = () => {
           </DialogContentText>
           <TextField
             autoFocus
-            margin='dense'
-            id='name'
-            label='Test Name'
-            type='text'
+            margin="dense"
+            id="name"
+            label="Test Name"
+            type="text"
             fullWidth
             onChange={(e) => setNewTestName(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
-          <Button color='primary' onClick={toggleAddTestDialog}>
+          <Button color="primary" onClick={toggleAddTestDialog}>
             Cancel
           </Button>
-          <Button color='primary' onClick={handleAddTest}>
+          <Button color="primary" onClick={handleAddTest}>
             Submit
           </Button>
         </DialogActions>
       </Dialog>
 
-      <IconButton aria-label='add' onClick={toggleAddTestDialog}>
+      <IconButton aria-label="add" onClick={toggleAddTestDialog}>
         <Add />
       </IconButton>
 

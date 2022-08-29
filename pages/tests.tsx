@@ -1,8 +1,8 @@
-import type { NextPage } from 'next';
-import { useQuery } from 'urql';
-import { GetTestsDocument } from '../gql/generated/graphql';
-import { CustomList } from '../components/CustomList';
-import { Typography } from '@mui/material';
+import type { NextPage } from "next";
+import { useQuery } from "urql";
+import { GetTestsDocument } from "../gql/generated/graphql";
+import { CustomList } from "../components/CustomList";
+import { Typography } from "@mui/material";
 
 const TestsPage: NextPage = () => {
   const [result] = useQuery({
@@ -14,7 +14,7 @@ const TestsPage: NextPage = () => {
 
   return (
     <>
-      <Typography align='center' variant='h3'>
+      <Typography align="center" variant="h3">
         Tests
       </Typography>
       <CustomList
