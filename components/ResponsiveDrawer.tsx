@@ -15,7 +15,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Book, Check, HomeWork, House, School } from '@mui/icons-material';
 import Link from 'next/link';
-import AuthButton from './AuthButton';
+import AuthButton from './AuthButton'; 
+import RegistrationButton from './RegisterButton';
 
 const drawerWidth = 240;
 
@@ -79,6 +80,11 @@ export const ResponsiveDrawer: React.FC<Props> = ({ children }) => {
       <List>
         <ListItem disablePadding>
           <AuthButton />
+        </ListItem>
+      </List>
+      <List>
+        <ListItem disablePadding>
+          <RegistrationButton/>
         </ListItem>
       </List>
     </div>
