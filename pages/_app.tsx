@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Provider, createClient } from 'urql';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { ResponsiveDrawer } from '../components/ResponsiveDrawer';
+import {ResponsiveDrawer} from '../components/ResponsiveDrawer';
 
 const theme = createTheme({
   palette: {
