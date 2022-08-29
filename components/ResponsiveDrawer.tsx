@@ -1,21 +1,21 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Book, Check, HomeWork, House, School } from '@mui/icons-material';
-import Link from 'next/link';
-import AuthButton from './AuthButton';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MenuIcon from "@mui/icons-material/Menu";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { Book, Check, HomeWork, House, School } from "@mui/icons-material";
+import Link from "next/link";
+import AuthButton from "./AuthButton";
 
 const drawerWidth = 240;
 
@@ -33,29 +33,29 @@ export const ResponsiveDrawer: React.FC<Props> = ({ children }) => {
 
   const drawerItems = [
     {
-      text: 'Home',
+      text: "Home",
       icon: <House />,
-      href: '/',
+      href: "/",
     },
     {
-      text: 'Units',
+      text: "Units",
       icon: <Book />,
-      href: '/units',
+      href: "/units",
     },
     {
-      text: 'Classes',
+      text: "Classes",
       icon: <School />,
-      href: '/classes',
+      href: "/classes",
     },
     {
-      text: 'Assignments',
+      text: "Assignments",
       icon: <HomeWork />,
-      href: '/assignments',
+      href: "/assignments",
     },
     {
-      text: 'Tests',
+      text: "Tests",
       icon: <Check />,
-      href: '/tests',
+      href: "/tests",
     },
   ];
 
@@ -85,10 +85,10 @@ export const ResponsiveDrawer: React.FC<Props> = ({ children }) => {
   );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
-        position='fixed'
+        position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
@@ -96,36 +96,36 @@ export const ResponsiveDrawer: React.FC<Props> = ({ children }) => {
       >
         <Toolbar>
           <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            edge='start'
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6' noWrap component='div'>
+          <Typography variant="h6" noWrap component="div">
             ProTest
           </Typography>
         </Toolbar>
       </AppBar>
       <Box
-        component='nav'
+        component="nav"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label='mailbox folders'
+        aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          variant='temporary'
+          variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
             },
           }}
@@ -133,11 +133,11 @@ export const ResponsiveDrawer: React.FC<Props> = ({ children }) => {
           {drawer}
         </Drawer>
         <Drawer
-          variant='permanent'
+          variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
+            display: { xs: "none", sm: "block" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
             },
           }}
@@ -147,7 +147,7 @@ export const ResponsiveDrawer: React.FC<Props> = ({ children }) => {
         </Drawer>
       </Box>
       <Box
-        component='main'
+        component="main"
         sx={{
           flexGrow: 1,
           p: 3,
