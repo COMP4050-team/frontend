@@ -1,6 +1,13 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Book, Check, HomeWork, House, School } from "@mui/icons-material";
+import {
+  Book,
+  Check,
+  HomeWork,
+  House,
+  School,
+  UploadFile,
+} from "@mui/icons-material";
 import Link from "next/link";
 import AuthButton from "./AuthButton";
 import RegistrationButton from "./RegisterButton";
@@ -110,6 +117,11 @@ export const ResponsiveDrawer: React.FC<AppBarProps> = ({ children }) => {
       text: "Assignments",
       icon: <HomeWork />,
       href: "/assignments",
+    },
+    {
+      text: "Submissions",
+      icon: <UploadFile />,
+      href: "/submissions",
     },
     {
       text: "Tests",
