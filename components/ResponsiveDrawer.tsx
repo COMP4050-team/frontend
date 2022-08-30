@@ -22,6 +22,7 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import useIsLoggedIn from "../hooks/isLoggedIn";
 
 const drawerWidth = 240;
 
@@ -79,6 +80,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export const ResponsiveDrawer: React.FC<AppBarProps> = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const isLoggedin = useIsLoggedIn();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -176,11 +178,13 @@ export const ResponsiveDrawer: React.FC<AppBarProps> = ({ children }) => {
             <AuthButton />
           </ListItem>
         </List>
-        <List>
-          <ListItem disablePadding>
-            <RegistrationButton />
-          </ListItem>
-        </List>
+        {!isLoggedin && (
+          <List>
+            <ListItem disablePadding>
+              <RegistrationButton />
+            </ListItem>
+          </List>
+        )}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
