@@ -79,7 +79,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 // Adapted from https://mui.com/material-ui/react-drawer/#persistent-drawer
 export const ResponsiveDrawer: React.FC<AppBarProps> = ({ children }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const isLoggedin = useIsLoggedIn();
 
   const handleDrawerOpen = () => {
