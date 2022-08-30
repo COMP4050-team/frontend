@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import { useQuery } from "urql";
 import { GetUnitsDocument } from "../gql/generated/graphql";
 import { Typography } from "@mui/material";
+import React from "react";
 
 const Home: NextPage = () => {
   const [result] = useQuery({ query: GetUnitsDocument });
