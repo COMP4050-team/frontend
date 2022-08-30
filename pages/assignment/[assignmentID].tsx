@@ -1,24 +1,12 @@
 import type { NextPage } from "next";
-import { useMutation, useQuery } from "urql";
-import {
-  CreateTestDocument,
-  GetAssignmentDocument,
-} from "../../gql/generated/graphql";
+import { useQuery } from "urql";
+import { GetAssignmentDocument } from "../../gql/generated/graphql";
 import { useRouter } from "next/router";
 import { CustomList } from "../../components/CustomList";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { Add } from "@mui/icons-material";
+import { Button, Typography } from "@mui/material";
 import { useState } from "react";
+import AddTestDialog from "../../components/tests/AddTestDialog";
+import AddSubmissionDialog from "../../components/tests/AddSubmissionDialog";
 
 const AssignmentPage: NextPage = () => {
   const router = useRouter();
@@ -27,9 +15,7 @@ const AssignmentPage: NextPage = () => {
     query: GetAssignmentDocument,
     variables: { id: assignmentID as string },
   });
-  const [createTestResult, createTest] = useMutation(CreateTestDocument);
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
-  const [newTestName, setNewTestName] = useState("");
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;
@@ -38,66 +24,35 @@ const AssignmentPage: NextPage = () => {
     setShowAddTestDialog(!showAddTestDialog);
   };
 
-  const handleAddTest = async () => {
-    if (!assignmentID || typeof assignmentID !== "string") {
-      alert("No assignment ID");
-      return;
-    }
-
-    await createTest({
-      test: {
-        name: newTestName,
-        assignmentID,
-        storagePath: `tests/${createTestResult.data?.createTest.assignmentID}/${createTestResult.data?.createTest.id}/${newTestName}`,
-      },
-    });
-    await reexecuteQuery({ requestPolicy: "network-only" });
-    toggleAddTestDialog();
-  };
-
   return (
     <>
       <Typography align="center" variant="h3">
         {result.data?.assignment?.name}
       </Typography>
 
-      <Dialog
+      <AddTestDialog
+        assignmentID={assignmentID as string}
         open={showAddTestDialog}
+        toggleOpen={toggleAddTestDialog}
         onClose={toggleAddTestDialog}
-        aria-labelledby="form-dialog-title"
-        fullWidth
-        maxWidth="xs"
-      >
-        <DialogTitle id="form-dialog-title">
-          Add a Test for this Assignment
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please enter the test&apos;s details.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Test Name"
-            type="text"
-            fullWidth
-            onChange={(e) => setNewTestName(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button color="primary" onClick={toggleAddTestDialog}>
-            Cancel
-          </Button>
-          <Button color="primary" onClick={handleAddTest}>
-            Submit
-          </Button>
-        </DialogActions>
-      </Dialog>
+        reexecuteQuery={reexecuteQuery}
+      />
 
-      <IconButton aria-label="add" onClick={toggleAddTestDialog}>
-        <Add />
-      </IconButton>
+      <AddSubmissionDialog
+        assignmentID={assignmentID as string}
+        open={showAddTestDialog}
+        toggleOpen={toggleAddTestDialog}
+        onClose={toggleAddTestDialog}
+        reexecuteQuery={reexecuteQuery}
+      />
+
+      <Button aria-label="add" onClick={toggleAddTestDialog}>
+        Add Test
+      </Button>
+
+      <Button aria-label="add" onClick={toggleAddTestDialog}>
+        Add Submission
+      </Button>
 
       <CustomList
         items={
