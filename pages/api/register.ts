@@ -1,15 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { client } from '../../gql/client';
-import { RegisterDocument } from '../../gql/generated/graphql';
-import { serialize } from 'cookie';
+import type { NextApiRequest, NextApiResponse } from "next";
+import { client } from "../../gql/client";
+import { RegisterDocument } from "../../gql/generated/graphql";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
-  if (req.method !== 'POST') {
+  if (req.method !== "POST") {
     return res.status(405).json({
-      error: 'Method not allowed',
+      error: "Method not allowed",
     });
   }
 
@@ -35,17 +34,12 @@ export default async function handler(
   }
 
   if (gqlResponse.data?.register) {
-    res.setHeader(
-      'Set-Cookie',
-      serialize('token', gqlResponse.data.register, {
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // one day
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production' ? true : false,
-      }),
-    );
+    return res.status(200).json({
+      token: gqlResponse.data.register,
+    });
+  } else {
+    return res.status(500).json({
+      error: "No token returned from API",
+    });
   }
-
-  return res.status(200).json({
-    success: true,
-  });
 }
