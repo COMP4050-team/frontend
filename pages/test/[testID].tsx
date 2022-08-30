@@ -27,6 +27,7 @@ const TestPage: NextPage = () => {
   const UPLOADS_BUCKET_NAME = "uploads-76078f4";
 
   // Initialize the Amazon Cognito credentials provider
+  // TODO: Factor this out into a s3 service
   const s3 = useMemo(
     () =>
       new S3Client({

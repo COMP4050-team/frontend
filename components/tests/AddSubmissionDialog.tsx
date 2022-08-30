@@ -36,6 +36,7 @@ const AddSubmissionDialog: React.FC<Props> = ({
   const [newSubmissionStudentID, setNewSubmissionStudentID] = useState("");
 
   // Initialize the Amazon Cognito credentials provider
+  // TODO: Factor this out into a s3 service
   const s3 = useMemo(
     () =>
       new S3Client({
