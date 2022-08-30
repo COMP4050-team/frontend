@@ -17,7 +17,6 @@ import { CreateSubmissionDocument } from "../../gql/generated/graphql";
 interface Props {
   assignmentID: string;
   open?: boolean;
-  toggleOpen(): void;
   onClose(): void;
   // eslint-disable-next-line no-unused-vars
   reexecuteQuery(opts?: Partial<OperationContext> | undefined): void;
@@ -26,7 +25,6 @@ interface Props {
 const AddSubmissionDialog: React.FC<Props> = ({
   assignmentID,
   open,
-  toggleOpen,
   onClose,
   reexecuteQuery,
 }) => {
@@ -51,6 +49,8 @@ const AddSubmissionDialog: React.FC<Props> = ({
   );
 
   const handleAddSubmission = async () => {
+    await uploadFile();
+
     if (!assignmentID || typeof assignmentID !== "string") {
       alert("No assignment ID");
       return;
@@ -64,7 +64,7 @@ const AddSubmissionDialog: React.FC<Props> = ({
     });
     reexecuteQuery({ requestPolicy: "network-only" });
 
-    toggleOpen();
+    onClose();
   };
 
   const uploadFile = async () => {
@@ -123,12 +123,9 @@ const AddSubmissionDialog: React.FC<Props> = ({
           Choose File
           <input id="fileupload" type="file" hidden />
         </Button>
-        <Button variant="contained" component="label" onClick={uploadFile}>
-          Upload File
-        </Button>
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={toggleOpen}>
+        <Button color="primary" onClick={onClose}>
           Cancel
         </Button>
         <Button color="primary" onClick={handleAddSubmission}>

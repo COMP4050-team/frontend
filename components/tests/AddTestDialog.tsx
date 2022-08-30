@@ -14,7 +14,6 @@ import { CreateTestDocument } from "../../gql/generated/graphql";
 interface Props {
   assignmentID: string;
   open?: boolean;
-  toggleOpen(): void;
   onClose(): void;
   // eslint-disable-next-line no-unused-vars
   reexecuteQuery(opts?: Partial<OperationContext> | undefined): void;
@@ -23,7 +22,6 @@ interface Props {
 const AddTestDialog: React.FC<Props> = ({
   assignmentID,
   open,
-  toggleOpen,
   onClose,
   reexecuteQuery,
 }) => {
@@ -43,9 +41,9 @@ const AddTestDialog: React.FC<Props> = ({
         storagePath: `tests/${createTestResult.data?.createTest.assignmentID}/${createTestResult.data?.createTest.id}/${newTestName}`,
       },
     });
-    await reexecuteQuery({ requestPolicy: "network-only" });
+    reexecuteQuery({ requestPolicy: "network-only" });
 
-    toggleOpen();
+    onClose();
   };
 
   return (
@@ -74,7 +72,7 @@ const AddTestDialog: React.FC<Props> = ({
         />
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={toggleOpen}>
+        <Button color="primary" onClick={onClose}>
           Cancel
         </Button>
         <Button color="primary" onClick={handleAddTest}>
