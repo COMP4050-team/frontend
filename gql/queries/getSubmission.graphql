@@ -1,0 +1,6 @@
+query getSubmission($id: ID!) {
+  submission(id: $id) {
+    id
+    studentID
+  }
+}

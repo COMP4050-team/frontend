@@ -13,7 +13,7 @@ import {
 import { CustomList } from "../../components/CustomList";
 import { useEffect, useMemo, useState } from "react";
 
-const AssignmentPage: NextPage = () => {
+const TestPage: NextPage = () => {
   const router = useRouter();
   const { testID } = router.query;
   const [result] = useQuery({
@@ -27,6 +27,7 @@ const AssignmentPage: NextPage = () => {
   const UPLOADS_BUCKET_NAME = "uploads-76078f4";
 
   // Initialize the Amazon Cognito credentials provider
+  // TODO: Factor this out into a s3 service
   const s3 = useMemo(
     () =>
       new S3Client({
@@ -124,4 +125,4 @@ const AssignmentPage: NextPage = () => {
   );
 };
 
-export default AssignmentPage;
+export default TestPage;
