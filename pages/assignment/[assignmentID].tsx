@@ -16,12 +16,17 @@ const AssignmentPage: NextPage = () => {
     variables: { id: assignmentID as string },
   });
   const [showAddTestDialog, setShowAddTestDialog] = useState(false);
+  const [showAddSubmissionDialog, setShowAddSubmissionDialog] = useState(false);
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;
 
   const toggleAddTestDialog = () => {
     setShowAddTestDialog(!showAddTestDialog);
+  };
+
+  const toggleAddSubmissionDialog = () => {
+    setShowAddSubmissionDialog(!showAddSubmissionDialog);
   };
 
   return (
@@ -33,16 +38,14 @@ const AssignmentPage: NextPage = () => {
       <AddTestDialog
         assignmentID={assignmentID as string}
         open={showAddTestDialog}
-        toggleOpen={toggleAddTestDialog}
         onClose={toggleAddTestDialog}
         reexecuteQuery={reexecuteQuery}
       />
 
       <AddSubmissionDialog
         assignmentID={assignmentID as string}
-        open={showAddTestDialog}
-        toggleOpen={toggleAddTestDialog}
-        onClose={toggleAddTestDialog}
+        open={showAddSubmissionDialog}
+        onClose={toggleAddSubmissionDialog}
         reexecuteQuery={reexecuteQuery}
       />
 
@@ -50,20 +53,39 @@ const AssignmentPage: NextPage = () => {
         Add Test
       </Button>
 
-      <Button aria-label="add" onClick={toggleAddTestDialog}>
+      <Button aria-label="add" onClick={toggleAddSubmissionDialog}>
         Add Submission
       </Button>
 
-      <CustomList
-        items={
-          result.data?.assignment?.tests.map((test) => {
-            return {
-              text: test.name,
-              href: `/test/${test.id}`,
-            };
-          }) ?? []
-        }
-      />
+      <div className="flex justify-between max-w-md">
+        <div>
+          <Typography variant="h5">Tests</Typography>
+          <CustomList
+            items={
+              result.data?.assignment?.tests.map((test) => {
+                return {
+                  text: test.name,
+                  href: `/test/${test.id}`,
+                };
+              }) ?? []
+            }
+          />
+        </div>
+
+        <div>
+          <Typography variant="h5">Submissions</Typography>
+          <CustomList
+            items={
+              result.data?.assignment?.submissions.map((submission) => {
+                return {
+                  text: submission.studentID,
+                  href: `/submission/${submission.id}`,
+                };
+              }) ?? []
+            }
+          />
+        </div>
+      </div>
     </>
   );
 };
