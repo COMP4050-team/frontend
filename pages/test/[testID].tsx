@@ -13,7 +13,7 @@ import {
 import { CustomList } from "../../components/CustomList";
 import { useEffect, useMemo, useState } from "react";
 
-const AssignmentPage: NextPage = () => {
+const TestPage: NextPage = () => {
   const router = useRouter();
   const { testID } = router.query;
   const [result] = useQuery({
@@ -124,4 +124,4 @@ const AssignmentPage: NextPage = () => {
   );
 };
 
-export default AssignmentPage;
+export default TestPage;
