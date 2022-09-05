@@ -15,7 +15,7 @@ const TestsPage: NextPage = () => {
 
   return (
     <>
-      <Typography align='center' variant='h3'>
+      <Typography align="center" variant="h3">
         Tests
       </Typography>
       <CustomList

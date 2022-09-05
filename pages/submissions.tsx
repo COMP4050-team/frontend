@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import { useQuery } from "urql";
-import { GetAssignmentsDocument } from "../gql/generated/graphql";
+import { GetSubmissionsDocument } from "../gql/generated/graphql";
 import { CustomList } from "../components/CustomList";
 import { Typography } from "@mui/material";
 
-const AssignmentsPage: NextPage = () => {
+const TestsPage: NextPage = () => {
   const [result] = useQuery({
-    query: GetAssignmentsDocument,
+    query: GetSubmissionsDocument,
   });
 
   if (result.fetching) return <p>Loading...</p>;
@@ -15,14 +15,14 @@ const AssignmentsPage: NextPage = () => {
   return (
     <>
       <Typography align="center" variant="h3">
-        Assignments
+        Submissions
       </Typography>
       <CustomList
         items={
-          result.data?.assignments.map((assignment) => {
+          result.data?.submissions.map((submission) => {
             return {
-              text: assignment.name,
-              href: `/assignment/${assignment.id}`,
+              text: submission.studentID,
+              href: `/submission/${submission.id}`,
             };
           }) ?? []
         }
@@ -31,4 +31,4 @@ const AssignmentsPage: NextPage = () => {
   );
 };
 
-export default AssignmentsPage;
+export default TestsPage;
