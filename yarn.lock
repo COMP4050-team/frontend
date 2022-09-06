@@ -1527,7 +1527,10 @@
     "@emotion/cache" "^11.10.0"
     "@emotion/serialize" "^1.1.0"
     "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
+<<<<<<< HEAD
     "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
+=======
+>>>>>>> 4d7f853b5356050d08d167918e55897c983791b8
     "@emotion/utils" "^1.2.0"
     "@emotion/weak-memoize" "^0.3.0"
     hoist-non-react-statics "^3.3.1"
@@ -1558,7 +1561,10 @@
     "@emotion/is-prop-valid" "^1.2.0"
     "@emotion/serialize" "^1.1.0"
     "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
+<<<<<<< HEAD
     "@emotion/use-insertion-effect-with-fallbacks" "^1.0.0"
+=======
+>>>>>>> 4d7f853b5356050d08d167918e55897c983791b8
     "@emotion/utils" "^1.2.0"
 
 "@emotion/unitless@^0.8.0":
@@ -1571,11 +1577,14 @@
   resolved "https://registry.yarnpkg.com/@emotion/use-insertion-effect-with-fallbacks/-/use-insertion-effect-with-fallbacks-1.0.0.tgz#ffadaec35dbb7885bd54de3fa267ab2f860294df"
   integrity sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==
 
+<<<<<<< HEAD
 "@emotion/use-insertion-effect-with-fallbacks@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@emotion/use-insertion-effect-with-fallbacks/-/use-insertion-effect-with-fallbacks-1.0.0.tgz#ffadaec35dbb7885bd54de3fa267ab2f860294df"
   integrity sha512-1eEgUGmkaljiBnRMTdksDV1W4kUnmwgp7X9G8B++9GYwl1lUdqSndSriIrTJ0N7LQaoauY9JJ2yhiOYK5+NI4A==
 
+=======
+>>>>>>> 4d7f853b5356050d08d167918e55897c983791b8
 "@emotion/utils@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@emotion/utils/-/utils-1.2.0.tgz"
@@ -3861,7 +3870,11 @@ get-caller-file@^2.0.1, get-caller-file@^2.0.5:
   resolved "https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
+<<<<<<< HEAD
 get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1, get-intrinsic@^1.1.2, get-intrinsic@^1.1.2:
+=======
+get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1, get-intrinsic@^1.1.2:
+>>>>>>> 4d7f853b5356050d08d167918e55897c983791b8
   version "1.1.2"
   resolved "https://registry.npmjs.org/get-intrinsic/-/get-intrinsic-1.1.2.tgz"
   integrity sha512-Jfm3OyCxHh9DJyc28qGk+JmfkpO41A4XkneDSujN9MDXrm4oDKdHvndhZ2dN94+ERNfkYJWDclW6k2L/ZGHjXA==
