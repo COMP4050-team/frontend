@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3f7decba-67db-4117-94be-c2473ef86ce8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/components/AuthButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/AuthButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/AuthForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/AuthForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/CustomList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CustomList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/RegisterButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/RegisterButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ResponsiveDrawer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ResponsiveDrawer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_document.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_document.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/hello.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/hello.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/login.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/login.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/register.ts" beforeDir="false" afterPath="$PROJECT_DIR$/pages/api/register.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/assignment/[assignmentID].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/assignment/[assignmentID].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/assignments.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/assignments.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/class/[classID].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/class/[classID].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/classes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/classes.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/logout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/logout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/register.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/register.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/test/[testID].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/test/[testID].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/tests.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/tests.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/unit/[unitID].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/unit/[unitID].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/units.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/units.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2E3vlO59N2XF0z6sT0bjUdCH8Yi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3f7decba-67db-4117-94be-c2473ef86ce8" name="Changes" comment="" />
+      <created>1661837245197</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1661837245197</updated>
+      <workItem from="1661837248643" duration="1000" />
+    </task>
+    <servers />
+  </component>
+</project>
