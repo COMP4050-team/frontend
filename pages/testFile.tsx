@@ -17,7 +17,7 @@ export const TestFile = () => {
       <DataGrid
         columns={columns}
         rows={rows}
-        pageSize={4}
+        pageSize={10}
         rowsPerPageOptions={[6]}
       />
       <TestDetails />
