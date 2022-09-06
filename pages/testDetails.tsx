@@ -28,6 +28,7 @@ function TestDetails() {
           Key: "tests/Test.java",
         })
       );
+      console.log(response.Body);
     } catch (err: any) {
       return alert("There was an error downloading your file: " + err.message);
     }
