@@ -30,8 +30,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     authState: any;
     operation: any;
   }) => {
-    console.log(authState);
-
     if (!authState || !authState.token) {
       return operation;
     }
@@ -40,8 +38,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       typeof operation.context.fetchOptions === "function"
         ? operation.context.fetchOptions()
         : operation.context.fetchOptions || {};
-
-    console.log("addAuthToOperation", authState);
 
     return makeOperation(operation.kind, operation, {
       ...operation.context,
