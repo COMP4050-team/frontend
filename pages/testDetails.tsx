@@ -16,21 +16,21 @@ function TestDetails(){
     // const [template, setTemplate] = useState('Choose Template')
 
     const REGION = 'ap-southeast-2';
-        const UPLOADS_BUCKET_NAME = 'uploads-76078f4';
+    const UPLOADS_BUCKET_NAME = 'uploads-76078f4';
 
-        // const client = new S3Client({region: "ap-southeast-2"});
+    // const client = new S3Client({region: "ap-southeast-2"});
 
-        const s3 = useMemo(
-            () =>
-              new S3Client({
-                region: REGION,
-                credentials: fromCognitoIdentityPool({
-                  client: new CognitoIdentityClient({ region: REGION }),
-                  identityPoolId: 'ap-southeast-2:46ec7d87-6d8a-494f-a5c0-f067f9c45e0b', // IDENTITY_POOL_ID
-                }),
-              }),
-            [],
-          );
+    const s3 = useMemo(
+        () =>
+          new S3Client({
+            region: REGION,
+            credentials: fromCognitoIdentityPool({
+              client: new CognitoIdentityClient({ region: REGION }),
+              identityPoolId: 'ap-southeast-2:46ec7d87-6d8a-494f-a5c0-f067f9c45e0b', // IDENTITY_POOL_ID
+            }),
+          }),
+      [],
+    );
 
     const downloadFile = async () =>{
 

@@ -25,3 +25,5 @@ export const TestFile = () =>{
         </Box>
     )
   };
+
+  export default TestFile;
