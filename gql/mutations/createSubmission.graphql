@@ -1,0 +1,6 @@
+mutation createSubmission($submission: NewSubmission!) {
+  createSubmission(input: $submission) {
+    id
+    studentID
+  }
+}

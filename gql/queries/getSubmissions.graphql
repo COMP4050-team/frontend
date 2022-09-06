@@ -1,0 +1,6 @@
+query getSubmissions {
+  submissions {
+    id
+    studentID
+  }
+}
