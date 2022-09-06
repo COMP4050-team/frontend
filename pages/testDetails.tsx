@@ -34,6 +34,9 @@ function TestDetails() {
     }
   };
 
+  //TODO: Make sure that the data is stored in a local data.JSON file.
+  //TODO: Create an add function that adds any new tests
+
   return (
     <div className="container">
       <Button
