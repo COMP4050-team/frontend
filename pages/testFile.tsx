@@ -18,7 +18,7 @@ export const TestFile = () => {
         columns={columns}
         rows={rows}
         pageSize={4}
-        rowsPerPageOptions={[4]}
+        rowsPerPageOptions={[6]}
       />
       <TestDetails />
     </Box>
