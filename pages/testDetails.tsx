@@ -25,7 +25,7 @@ function TestDetails() {
       const response = await s3.send(
         new GetObjectCommand({
           Bucket: UPLOADS_BUCKET_NAME,
-          Key: "tests/Test.java",
+          Key: "tests/data.json",
         })
       );
       console.log(response.Body);
@@ -34,7 +34,6 @@ function TestDetails() {
     }
   };
 
-  //TODO: Make sure that the data is stored in a local data.JSON file.
   //TODO: Create an add function that adds any new tests
 
   return (
