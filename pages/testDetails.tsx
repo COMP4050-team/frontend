@@ -3,7 +3,6 @@ import { useMemo } from "react";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
-import { Response } from "node-fetch";
 
 function TestDetails() {
   const REGION = "ap-southeast-2";
@@ -30,12 +29,10 @@ function TestDetails() {
         })
       );
 
-      // type bodyStatus = 'Blob';
-      // let body2 = 'Blob' as bodyStatus;
-      // body2 = response.Body;
-      // const body = response.Body;
-      // let ans = new Response(body2);
-      console.log(response.Body);
+      const body = response.Body as ReadableStream<any> | Blob | undefined;
+      const json = await new Response(body).json();
+
+      console.log(json);
     } catch (err: any) {
       return alert("There was an error downloading your file: " + err.message);
     }
