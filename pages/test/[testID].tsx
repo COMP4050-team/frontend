@@ -12,6 +12,7 @@ import {
 } from "@aws-sdk/client-s3";
 import { CustomList } from "../../components/CustomList";
 import { useEffect, useMemo, useState } from "react";
+import TestTable from "../../components/tests/TestTable";
 
 const TestPage: NextPage = () => {
   const router = useRouter();
@@ -121,6 +122,8 @@ const TestPage: NextPage = () => {
           }) ?? []
         }
       />
+
+      <TestTable />
     </>
   );
 };
