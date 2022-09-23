@@ -3,16 +3,11 @@ import { useQuery } from "urql";
 import { GetTestDocument } from "../../gql/generated/graphql";
 import { useRouter } from "next/router";
 import { Button, Typography } from "@mui/material";
-import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
-import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
-import {
-  ListObjectsCommand,
-  PutObjectCommand,
-  S3Client,
-} from "@aws-sdk/client-s3";
+import { ListObjectsCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { CustomList } from "../../components/CustomList";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import TestTable from "../../components/tests/TestTable";
+import { s3Service } from "../../services/s3";
 
 const TestPage: NextPage = () => {
   const router = useRouter();
@@ -24,22 +19,7 @@ const TestPage: NextPage = () => {
   const [files, setFiles] = useState<string[] | undefined>([]);
 
   // Set the AWS Region
-  const REGION = "ap-southeast-2";
   const UPLOADS_BUCKET_NAME = "uploads-76078f4";
-
-  // Initialize the Amazon Cognito credentials provider
-  // TODO: Factor this out into a s3 service
-  const s3 = useMemo(
-    () =>
-      new S3Client({
-        region: REGION,
-        credentials: fromCognitoIdentityPool({
-          client: new CognitoIdentityClient({ region: REGION }),
-          identityPoolId: "ap-southeast-2:46ec7d87-6d8a-494f-a5c0-f067f9c45e0b", // IDENTITY_POOL_ID
-        }),
-      }),
-    []
-  );
 
   const uploadFile = async () => {
     const fileUpload = document.getElementById(
@@ -71,7 +51,7 @@ const TestPage: NextPage = () => {
     };
 
     try {
-      await s3.send(new PutObjectCommand(uploadParams));
+      await s3Service.send(new PutObjectCommand(uploadParams));
       alert("Successfully uploaded file.");
     } catch (err: any) {
       return alert("There was an error uploading your file: " + err.message);
@@ -86,14 +66,14 @@ const TestPage: NextPage = () => {
       };
 
       try {
-        const data = await s3.send(new ListObjectsCommand(listParams));
+        const data = await s3Service.send(new ListObjectsCommand(listParams));
 
         setFiles(data.Contents?.map((obj) => obj.Key || "") || []);
       } catch (err: any) {
         return alert("There was an error listing your files: " + err.message);
       }
     })();
-  }, [result.data?.test?.assignmentID, s3, testID]);
+  }, [result.data?.test?.assignmentID, testID]);
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;

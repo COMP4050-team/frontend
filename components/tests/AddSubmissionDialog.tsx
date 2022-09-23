@@ -9,17 +9,12 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import { OperationContext, useMutation, useQuery } from "urql";
-import {
-  CreateSubmissionDocument,
-  GetUnitDocument,
-} from "../../gql/generated/graphql";
+import { OperationContext, useMutation } from "urql";
+import { CreateSubmissionDocument } from "../../gql/generated/graphql";
 import { s3Service } from "../../services/s3";
 
 interface Props {
   assignmentID: string;
-  assignmentName: string;
-  unitID: string;
   open?: boolean;
   onClose(): void;
   // eslint-disable-next-line no-unused-vars
@@ -28,8 +23,6 @@ interface Props {
 
 const AddSubmissionDialog: React.FC<Props> = ({
   assignmentID,
-  assignmentName,
-  unitID,
   open,
   onClose,
   reexecuteQuery,
@@ -39,10 +32,6 @@ const AddSubmissionDialog: React.FC<Props> = ({
 
   const [, createSubmission] = useMutation(CreateSubmissionDocument);
   const [newSubmissionStudentID, setNewSubmissionStudentID] = useState("");
-  const [unitResult] = useQuery({
-    query: GetUnitDocument,
-    variables: { id: unitID },
-  });
 
   const handleAddSubmission = async () => {
     await uploadFile();
@@ -68,25 +57,25 @@ const AddSubmissionDialog: React.FC<Props> = ({
       "fileupload"
     ) as HTMLInputElement;
 
-    if (!fileUpload.files) {
+    const uploadedFile = fileUpload.files ? fileUpload.files[0] : null;
+    console.log(uploadedFile);
+
+    if (!uploadedFile) {
       alert("No file selected");
       return;
     }
 
-    for (const file of fileUpload.files) {
-      const relativePath = file.webkitRelativePath;
+    const uploadParams = {
+      Bucket: UPLOADS_BUCKET_NAME,
+      Key: `projects/${assignmentID}/${newSubmissionStudentID}/Main.java`,
+      Body: uploadedFile,
+    };
 
-      const uploadParams = {
-        Bucket: UPLOADS_BUCKET_NAME,
-        Key: `${unitResult.data?.unit?.name}/${assignmentName}/Projects/${relativePath}`,
-        Body: file,
-      };
-
-      try {
-        await s3Service.send(new PutObjectCommand(uploadParams));
-      } catch (err: any) {
-        return alert("There was an error uploading your file: " + err.message);
-      }
+    try {
+      await s3Service.send(new PutObjectCommand(uploadParams));
+      alert("Successfully uploaded file.");
+    } catch (err: any) {
+      return alert("There was an error uploading your file: " + err.message);
     }
   };
 
@@ -117,16 +106,7 @@ const AddSubmissionDialog: React.FC<Props> = ({
 
         <Button variant="contained" component="label">
           Choose File
-          <input
-            id="fileupload"
-            type="file"
-            // @ts-ignore-next-line
-            // eslint-disable-next-line react/no-unknown-property
-            directory=""
-            // eslint-disable-next-line react/no-unknown-property
-            webkitdirectory=""
-            hidden
-          />
+          <input id="fileupload" type="file" hidden />
         </Button>
       </DialogContent>
       <DialogActions>
