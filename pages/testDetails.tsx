@@ -31,9 +31,6 @@ function TestDetails() {
       );
 
       const body = response.Body;
-      // const json = await new Response(body).json();
-      // console.log(json);
-
       if (!(body instanceof Readable)) {
         const json = await new Response(body).json();
         console.log(json);
