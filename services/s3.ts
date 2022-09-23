@@ -30,12 +30,14 @@ export type IS3DataRows = {
   studentName: string;
 }[];
 
-export const downloadFile = async (): Promise<IS3Data | null> => {
+export const downloadFile = async (
+  assignmentID: string
+): Promise<IS3Data | null> => {
   try {
     const response = await s3Service.send(
       new GetObjectCommand({
         Bucket: UPLOADS_BUCKET_NAME,
-        Key: "tests/data.json",
+        Key: `results/${assignmentID}/data.json`,
       })
     );
 
