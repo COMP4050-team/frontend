@@ -4,12 +4,16 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import { downloadFile, IS3DataColumns, IS3DataRows } from "../../services/s3";
 
-export const TestFile = () => {
+interface Props {
+  assignmentID: string;
+}
+
+export const TestFile = ({ assignmentID }: Props) => {
   const [rows, setRows] = useState<IS3DataRows>();
   const [cols, setCols] = useState<IS3DataColumns>();
 
   const getTestData = async () => {
-    const data = await downloadFile();
+    const data = await downloadFile(assignmentID);
 
     if (data !== null) {
       setRows(data.rows);

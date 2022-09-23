@@ -103,7 +103,9 @@ const TestPage: NextPage = () => {
         }
       />
 
-      <TestTable />
+      {result.data?.test?.assignmentID && (
+        <TestTable assignmentID={result.data?.test?.assignmentID} />
+      )}
     </>
   );
 };
