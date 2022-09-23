@@ -6,7 +6,7 @@ import { Readable } from "stream";
 const REGION = "ap-southeast-2";
 const UPLOADS_BUCKET_NAME = "uploads-76078f4";
 
-const s3 = new S3Client({
+export const s3Service = new S3Client({
   region: REGION,
   credentials: fromCognitoIdentityPool({
     client: new CognitoIdentityClient({ region: REGION }),
@@ -32,7 +32,7 @@ export type IS3DataRows = {
 
 export const downloadFile = async (): Promise<IS3Data | null> => {
   try {
-    const response = await s3.send(
+    const response = await s3Service.send(
       new GetObjectCommand({
         Bucket: UPLOADS_BUCKET_NAME,
         Key: "tests/data.json",
