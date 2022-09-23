@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { IS3DataRows } from "../../services/s3";
+import { Button } from "@mui/material";
+import { downloadFile, IS3DataColumns, IS3DataRows } from "../../services/s3";
 
-interface Props {
-  rows: IS3DataRows;
-}
+export const TestFile = () => {
+  const [rows, setRows] = useState<IS3DataRows>();
+  const [cols, setCols] = useState<IS3DataColumns>();
 
-export const TestTable = ({ rows }: Props) => {
+  const getTestData = async () => {
+    const data = await downloadFile();
+
+    if (data !== null) {
+      setRows(data.rows);
+      setCols(data.columns);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -16,24 +25,22 @@ export const TestTable = ({ rows }: Props) => {
       }}
     >
       <DataGrid
-        columns={[
-          { field: "Test", headerName: "Result", flex: 1 },
-          { field: "SID", headerName: "Student ID", flex: 1 },
-          { field: "Name", headerName: "Student Name", flex: 1 },
-        ]}
-        rows={
-          rows?.map((row, i) => {
-            return {
-              id: i,
-              ...row,
-            };
-          }) || []
+        columns={
+          cols?.map((col) => ({
+            field: col.field,
+            headerName: col.headerName,
+            flex: 1,
+          })) || []
         }
+        rows={rows || []}
         pageSize={5}
         rowsPerPageOptions={[5]}
       />
+      <div className="container">
+        <Button onClick={getTestData}>Get Details</Button>
+      </div>
     </Box>
   );
 };
 
-export default TestTable;
+export default TestFile;

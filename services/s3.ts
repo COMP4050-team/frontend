@@ -6,7 +6,7 @@ import { Readable } from "stream";
 const REGION = "ap-southeast-2";
 const UPLOADS_BUCKET_NAME = "uploads-76078f4";
 
-export const s3Service = new S3Client({
+const s3 = new S3Client({
   region: REGION,
   credentials: fromCognitoIdentityPool({
     client: new CognitoIdentityClient({ region: REGION }),
@@ -25,17 +25,17 @@ export type IS3DataColumns = {
   width: number;
 }[];
 export type IS3DataRows = {
-  SID: string;
-  Test: string;
-  Name: string;
+  id: number;
+  studentID: string;
+  studentName: string;
 }[];
 
-export const downloadFile = async (s3Key: string): Promise<IS3Data | null> => {
+export const downloadFile = async (): Promise<IS3Data | null> => {
   try {
-    const response = await s3Service.send(
+    const response = await s3.send(
       new GetObjectCommand({
         Bucket: UPLOADS_BUCKET_NAME,
-        Key: s3Key,
+        Key: "tests/data.json",
       })
     );
 
@@ -44,7 +44,7 @@ export const downloadFile = async (s3Key: string): Promise<IS3Data | null> => {
       return await new Response(body).json();
     }
   } catch (err: any) {
-    console.log("There was an error downloading your file: " + err.message);
+    alert("There was an error downloading your file: " + err.message);
   }
 
   return null;
