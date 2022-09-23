@@ -3,7 +3,7 @@ import { useQuery } from "urql";
 import { GetTestsDocument } from "../gql/generated/graphql";
 import { CustomList } from "../components/CustomList";
 import { Typography } from "@mui/material";
-import TestFile from "./testFile";
+import TestTable from "./testTable";
 
 const TestsPage: NextPage = () => {
   const [result] = useQuery({
@@ -18,7 +18,7 @@ const TestsPage: NextPage = () => {
       <Typography align="center" variant="h3">
         Tests
       </Typography>
-      <TestFile />
+      <TestTable />
       <CustomList
         items={
           result.data?.tests.map((test) => {

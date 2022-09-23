@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+import { Box } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+let Data = require("../data.json");
 import { Button } from "@mui/material";
 import { useMemo } from "react";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
@@ -5,10 +9,13 @@ import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
 import { Readable } from "stream";
 
-function TestDetails() {
+const columns = Data.columns;
+
+export const TestFile = () => {
+  const [rows, setRows] = useState([]);
   const REGION = "ap-southeast-2";
   const UPLOADS_BUCKET_NAME = "uploads-76078f4";
-  let json;
+  let json: any[] = [];
 
   const s3 = useMemo(
     () =>
@@ -35,25 +42,37 @@ function TestDetails() {
       if (!(body instanceof Readable)) {
         json = await new Response(body).json();
         console.log(json);
+        // setRows({ json.rows: });
       }
     } catch (err: any) {
       return alert("There was an error downloading your file: " + err.message);
     }
   };
 
-  //TODO: Create an add function that adds any new tests
-
   return (
-    <div className="container">
-      <Button
-        onClick={() => {
-          downloadFile();
-        }}
-      >
-        Get Details
-      </Button>
-    </div>
+    <Box
+      sx={{
+        height: 400,
+        width: "100%",
+      }}
+    >
+      <DataGrid
+        columns={columns}
+        rows={rows}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+      />
+      <div className="container">
+        <Button
+          onClick={() => {
+            downloadFile();
+          }}
+        >
+          Get Details
+        </Button>
+      </div>
+    </Box>
   );
-}
+};
 
-export default TestDetails;
+export default TestFile;
