@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
+import { Readable } from "stream";
 
 function TestDetails() {
   const REGION = "ap-southeast-2";
@@ -29,16 +30,18 @@ function TestDetails() {
         })
       );
 
-      const body = response.Body as ReadableStream<any> | Blob | undefined;
-      const json = await new Response(body).json();
+      const body = response.Body;
+      // const json = await new Response(body).json();
+      // console.log(json);
 
-      console.log(json);
+      if (!(body instanceof Readable)) {
+        const json = await new Response(body).json();
+        console.log(json);
+      }
     } catch (err: any) {
       return alert("There was an error downloading your file: " + err.message);
     }
   };
-
-  // const payload = await streamToString(getObjectResponse.Body)
 
   //TODO: Create an add function that adds any new tests
 
