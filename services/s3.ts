@@ -25,19 +25,17 @@ export type IS3DataColumns = {
   width: number;
 }[];
 export type IS3DataRows = {
-  id: number;
-  studentID: string;
-  studentName: string;
+  SID: string;
+  Test: string;
+  Name: string;
 }[];
 
-export const downloadFile = async (
-  assignmentID: string
-): Promise<IS3Data | null> => {
+export const downloadFile = async (s3Key: string): Promise<IS3Data | null> => {
   try {
     const response = await s3Service.send(
       new GetObjectCommand({
         Bucket: UPLOADS_BUCKET_NAME,
-        Key: `results/${assignmentID}/data.json`,
+        Key: s3Key,
       })
     );
 

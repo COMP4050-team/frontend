@@ -1,25 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button } from "@mui/material";
-import { downloadFile, IS3DataColumns, IS3DataRows } from "../../services/s3";
+import { downloadFile } from "../../services/s3";
 
 interface Props {
-  assignmentID: string;
+  unitName: string;
+  assignmentName: string;
 }
 
-export const TestFile = ({ assignmentID }: Props) => {
-  const [rows, setRows] = useState<IS3DataRows>();
-  const [cols, setCols] = useState<IS3DataColumns>();
+export const TestTable = ({ unitName, assignmentName }: Props) => {
+  const [rows, setRows] = useState<
+    {
+      SID: string;
+      Test: string;
+      Name: string;
+    }[]
+  >();
 
-  const getTestData = async () => {
-    const data = await downloadFile(assignmentID);
-
-    if (data !== null) {
-      setRows(data.rows);
-      setCols(data.columns);
-    }
-  };
+  useEffect(() => {
+    downloadFile(`${unitName}/${assignmentName}/Results/result.json`).then(
+      (data) => {
+        if (data !== null) {
+          setRows(data.rows);
+        }
+      }
+    );
+  }, [assignmentName, unitName]);
 
   return (
     <Box
@@ -29,22 +35,24 @@ export const TestFile = ({ assignmentID }: Props) => {
       }}
     >
       <DataGrid
-        columns={
-          cols?.map((col) => ({
-            field: col.field,
-            headerName: col.headerName,
-            flex: 1,
-          })) || []
+        columns={[
+          { field: "Test", headerName: "Result", flex: 1 },
+          { field: "SID", headerName: "Student ID", flex: 1 },
+          { field: "Name", headerName: "Student Name", flex: 1 },
+        ]}
+        rows={
+          rows?.map((row, i) => {
+            return {
+              id: i,
+              ...row,
+            };
+          }) || []
         }
-        rows={rows || []}
         pageSize={5}
         rowsPerPageOptions={[5]}
       />
-      <div className="container">
-        <Button onClick={getTestData}>Get Details</Button>
-      </div>
     </Box>
   );
 };
 
-export default TestFile;
+export default TestTable;

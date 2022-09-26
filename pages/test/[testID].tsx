@@ -1,6 +1,11 @@
 import type { NextPage } from "next";
-import { useQuery } from "urql";
-import { GetTestDocument } from "../../gql/generated/graphql";
+import { useMutation, useQuery } from "urql";
+import {
+  GetAssignmentDocument,
+  GetTestDocument,
+  GetUnitDocument,
+  RunTestDocument,
+} from "../../gql/generated/graphql";
 import { useRouter } from "next/router";
 import { Button, Typography } from "@mui/material";
 import { ListObjectsCommand, PutObjectCommand } from "@aws-sdk/client-s3";
@@ -12,10 +17,19 @@ import { s3Service } from "../../services/s3";
 const TestPage: NextPage = () => {
   const router = useRouter();
   const { testID } = router.query;
-  const [result] = useQuery({
+  const [testResult] = useQuery({
     query: GetTestDocument,
     variables: { id: testID as string },
   });
+  const [assignmentResult] = useQuery({
+    query: GetAssignmentDocument,
+    variables: { id: testResult.data?.test?.assignmentID || "" },
+  });
+  const [unitResult] = useQuery({
+    query: GetUnitDocument,
+    variables: { id: testResult.data?.test?.unitID || "" },
+  });
+  const [, runTest] = useMutation(RunTestDocument);
   const [files, setFiles] = useState<string[] | undefined>([]);
 
   // Set the AWS Region
@@ -34,19 +48,16 @@ const TestPage: NextPage = () => {
       return;
     }
 
-    if (!result.data?.test) {
+    if (!testResult.data?.test) {
       alert("Could not upload file");
       return;
     }
 
-    console.log(result.data.test);
+    console.log(testResult.data.test);
 
     const uploadParams = {
       Bucket: UPLOADS_BUCKET_NAME,
-      // TODO: Fix this - result.data.test.assignmentID is always empty
-      Key: `tests/${result.data.test.assignmentID}/${
-        testID as string
-      }/Test.java`,
+      Key: `${unitResult.data?.unit?.name}/${assignmentResult.data?.assignment?.name}/Tests/Test.java`,
       Body: uploadedFile,
     };
 
@@ -62,7 +73,7 @@ const TestPage: NextPage = () => {
     (async () => {
       const listParams = {
         Bucket: UPLOADS_BUCKET_NAME,
-        Prefix: `tests/${result.data?.test?.assignmentID}}/${testID}/`,
+        Prefix: `${unitResult.data?.unit?.name}/${assignmentResult.data?.assignment?.name}/Tests/`,
       };
 
       try {
@@ -73,25 +84,46 @@ const TestPage: NextPage = () => {
         return alert("There was an error listing your files: " + err.message);
       }
     })();
-  }, [result.data?.test?.assignmentID, testID]);
+  }, [
+    testID,
+    unitResult.data?.unit?.name,
+    assignmentResult.data?.assignment?.name,
+  ]);
 
-  if (result.fetching) return <p>Loading...</p>;
-  if (result.error) return <p>Error :(</p>;
+  if (testResult.fetching || unitResult.fetching || assignmentResult.fetching)
+    return <p>Loading...</p>;
+  if (testResult.error || unitResult.error || assignmentResult.error)
+    return <p>Error :(</p>;
 
   return (
     <>
       <Typography align="center" variant="h3">
-        {result.data?.test?.name}
+        {testResult.data?.test?.name}
       </Typography>
-
-      <Button variant="contained" component="label">
-        Choose File
-        <input id="fileupload" type="file" hidden />
-      </Button>
-      <Button variant="contained" component="label" onClick={uploadFile}>
-        Upload File
-      </Button>
-
+      <div
+        style={{
+          display: "grid",
+          maxWidth: "fit-content",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          margin: "1rem",
+          gap: "2rem",
+        }}
+      >
+        <Button variant="contained" component="label">
+          Choose File
+          <input id="fileupload" type="file" hidden />
+        </Button>
+        <Button variant="contained" component="label" onClick={uploadFile}>
+          Upload File
+        </Button>
+        <Button
+          variant="contained"
+          component="label"
+          onClick={() => runTest({ testID: testID as string })}
+        >
+          Run Test
+        </Button>
+      </div>
       <CustomList
         items={
           files?.map((file) => {
@@ -102,10 +134,13 @@ const TestPage: NextPage = () => {
           }) ?? []
         }
       />
-
-      {result.data?.test?.assignmentID && (
-        <TestTable assignmentID={result.data?.test?.assignmentID} />
-      )}
+      {unitResult.data?.unit?.name &&
+        assignmentResult.data?.assignment?.name && (
+          <TestTable
+            unitName={unitResult.data?.unit?.name || ""}
+            assignmentName={assignmentResult.data?.assignment?.name || ""}
+          />
+        )}
     </>
   );
 };
