@@ -44,6 +44,8 @@ const AssignmentPage: NextPage = () => {
 
       <AddSubmissionDialog
         assignmentID={assignmentID as string}
+        assignmentName={result.data?.assignment?.name || "Unknown"}
+        unitID={result.data?.assignment?.unitID || "Unknown"}
         open={showAddSubmissionDialog}
         onClose={toggleAddSubmissionDialog}
         reexecuteQuery={reexecuteQuery}
