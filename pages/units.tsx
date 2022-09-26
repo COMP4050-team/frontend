@@ -11,10 +11,16 @@ import {
   DialogTitle,
   IconButton,
   TextField,
+  Toolbar,
   Typography,
 } from "@mui/material";
-import { Add } from "@mui/icons-material";
 import { useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
+import Grid from "@mui/material/Grid";
+import AppBar from "@mui/material/AppBar";
+import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 const UnitsPage: NextPage = () => {
   const [, createUnit] = useMutation(CreateUnitDocument);
@@ -75,20 +81,60 @@ const UnitsPage: NextPage = () => {
         </DialogActions>
       </Dialog>
 
-      <IconButton aria-label="add" onClick={toggleAddUnitDialog}>
-        <Add />
-      </IconButton>
-
-      <CustomList
-        items={
-          result.data?.units.map((unit) => {
-            return {
-              text: unit.name,
-              href: `/unit/${unit.id}`,
-            };
-          }) ?? []
-        }
-      />
+      <Paper sx={{ maxWidth: 936, margin: "auto", overflow: "hidden" }}>
+        <AppBar
+          position="static"
+          color="default"
+          elevation={0}
+          sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
+        >
+          <Toolbar>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <SearchIcon color="inherit" sx={{ display: "block" }} />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  fullWidth
+                  placeholder="Search by unit"
+                  InputProps={{
+                    disableUnderline: true,
+                    sx: { fontSize: "default" },
+                  }}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  sx={{ mr: 1 }}
+                  arai-label="add"
+                  onClick={toggleAddUnitDialog}
+                >
+                  Add Unit
+                </Button>
+                <Tooltip title="Reload">
+                  <IconButton>
+                    <RefreshIcon color="inherit" sx={{ display: "block" }} />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
+          <CustomList
+            items={
+              result.data?.units.map((unit) => {
+                return {
+                  text: unit.name,
+                  href: `/unit/${unit.id}`,
+                };
+              }) ?? []
+            }
+          />
+        </Typography>
+      </Paper>
     </>
   );
 };
