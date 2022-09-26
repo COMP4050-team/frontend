@@ -44,7 +44,7 @@ export const downloadFile = async (s3Key: string): Promise<IS3Data | null> => {
       return await new Response(body).json();
     }
   } catch (err: any) {
-    alert("There was an error downloading your file: " + err.message);
+    console.log("There was an error downloading your file: " + err.message);
   }
 
   return null;

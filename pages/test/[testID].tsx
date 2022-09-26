@@ -63,7 +63,7 @@ const TestPage: NextPage = () => {
 
     try {
       await s3Service.send(new PutObjectCommand(uploadParams));
-      alert("Successfully uploaded file.");
+      console.log("Successfully uploaded file.");
     } catch (err: any) {
       return alert("There was an error uploading your file: " + err.message);
     }
@@ -81,7 +81,7 @@ const TestPage: NextPage = () => {
 
         setFiles(data.Contents?.map((obj) => obj.Key || "") || []);
       } catch (err: any) {
-        return alert("There was an error listing your files: " + err.message);
+        console.log("There was an error listing your files: " + err.message);
       }
     })();
   }, [
