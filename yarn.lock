@@ -2664,7 +2664,7 @@
   resolved "https://registry.yarnpkg.com/@mui/types/-/types-7.2.0.tgz#91380c2d42420f51f404120f7a9270eadd6f5c23"
   integrity sha512-lGXtFKe5lp3UxTBGqKI1l7G8sE2xBik8qCfrLHD5olwP/YU0/ReWoWT7Lp1//ri32dK39oPMrJN8TgbkCSbsNA==
 
-"@mui/utils@^5.10.6", "@mui/utils@^5.9.3":
+"@mui/utils@^5.10.3", "@mui/utils@^5.10.6":
   version "5.10.6"
   resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-5.10.6.tgz#98d432d2b05544c46efe356cf095cea3a37c2e59"
   integrity sha512-g0Qs8xN/MW2M3fLL8197h5J2VB9U+49fLlnKKqC6zy/yus5cZwdT+Gwec+wUMxgwQoxMDn+J8oDWAn28kEOR/Q==
@@ -2675,10 +2675,10 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
-"@mui/x-date-pickers@^5.0.0-beta.5":
-  version "5.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-5.0.0-beta.7.tgz#c73617ded454fe76ac52449e02d5c8c7db4d4e1e"
-  integrity sha512-3GugfJ17OQ13TOjyIvz/DsbtG3VF1cU+iKNxY+bscKx03LVJPTRZMXrMCVJnVz5L3mjhwWfcku7+nOY6aC0GVA==
+"@mui/x-date-pickers@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-5.0.3.tgz#970362d93f7cc99bc2210370d1f254f7f8f61ef5"
+  integrity sha512-njoQvsh7WzgiHu0wGSSPnQ4emT3SDzxCpaKK9DM0jRaxyxfC2wQX431RWmouG8JjnugTltwLnPwkKjLclHQhhA==
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@date-io/core" "^2.15.0"
@@ -2686,7 +2686,7 @@
     "@date-io/dayjs" "^2.15.0"
     "@date-io/luxon" "^2.15.0"
     "@date-io/moment" "^2.15.0"
-    "@mui/utils" "^5.9.3"
+    "@mui/utils" "^5.10.3"
     "@types/react-transition-group" "^4.4.5"
     clsx "^1.2.1"
     prop-types "^15.7.2"
