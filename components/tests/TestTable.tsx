@@ -1,32 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { downloadFile } from "../../services/s3";
+import { IS3DataRows } from "../../services/s3";
 
 interface Props {
-  unitName: string;
-  assignmentName: string;
+  rows: IS3DataRows;
 }
 
-export const TestTable = ({ unitName, assignmentName }: Props) => {
-  const [rows, setRows] = useState<
-    {
-      SID: string;
-      Test: string;
-      Name: string;
-    }[]
-  >();
-
-  useEffect(() => {
-    downloadFile(`${unitName}/${assignmentName}/Results/result.json`).then(
-      (data) => {
-        if (data !== null) {
-          setRows(data.rows);
-        }
-      }
-    );
-  }, [assignmentName, unitName]);
-
+export const TestTable = ({ rows }: Props) => {
   return (
     <Box
       sx={{

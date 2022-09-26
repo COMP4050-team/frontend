@@ -7,12 +7,12 @@ import {
   RunTestDocument,
 } from "../../gql/generated/graphql";
 import { useRouter } from "next/router";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { ListObjectsCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { CustomList } from "../../components/CustomList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TestTable from "../../components/tests/TestTable";
-import { s3Service } from "../../services/s3";
+import { downloadFile, IS3DataRows, s3Service } from "../../services/s3";
 
 const TestPage: NextPage = () => {
   const router = useRouter();
@@ -29,8 +29,9 @@ const TestPage: NextPage = () => {
     query: GetUnitDocument,
     variables: { id: testResult.data?.test?.unitID || "" },
   });
-  const [, runTest] = useMutation(RunTestDocument);
+  const [runTestState, runTest] = useMutation(RunTestDocument);
   const [files, setFiles] = useState<string[] | undefined>([]);
+  const [resultRows, setResultRows] = useState<IS3DataRows>();
 
   // Set the AWS Region
   const UPLOADS_BUCKET_NAME = "uploads-76078f4";
@@ -64,31 +65,49 @@ const TestPage: NextPage = () => {
     try {
       await s3Service.send(new PutObjectCommand(uploadParams));
       console.log("Successfully uploaded file.");
+
+      await updateFileListing();
+      await downloadResultsFile();
     } catch (err: any) {
       return alert("There was an error uploading your file: " + err.message);
     }
   };
 
+  const updateFileListing = useCallback(async () => {
+    const listParams = {
+      Bucket: UPLOADS_BUCKET_NAME,
+      Prefix: `${unitResult.data?.unit?.name}/${assignmentResult.data?.assignment?.name}/Tests/`,
+    };
+
+    try {
+      const data = await s3Service.send(new ListObjectsCommand(listParams));
+
+      setFiles(data.Contents?.map((obj) => obj.Key || "") || []);
+    } catch (err: any) {
+      console.log("There was an error listing your files: " + err.message);
+    }
+  }, [assignmentResult.data?.assignment?.name, unitResult.data?.unit?.name]);
+
+  const downloadResultsFile = useCallback(async () => {
+    const unitName = unitResult.data?.unit?.name;
+    const assignmentName = assignmentResult.data?.assignment?.name;
+
+    if (unitName && assignmentName) {
+      const data = await downloadFile(
+        `${unitName}/${assignmentName}/Results/result.json`
+      );
+      if (data !== null) {
+        setResultRows(data.rows);
+      }
+    }
+  }, [unitResult.data?.unit?.name, assignmentResult.data?.assignment?.name]);
+
   useEffect(() => {
     (async () => {
-      const listParams = {
-        Bucket: UPLOADS_BUCKET_NAME,
-        Prefix: `${unitResult.data?.unit?.name}/${assignmentResult.data?.assignment?.name}/Tests/`,
-      };
-
-      try {
-        const data = await s3Service.send(new ListObjectsCommand(listParams));
-
-        setFiles(data.Contents?.map((obj) => obj.Key || "") || []);
-      } catch (err: any) {
-        console.log("There was an error listing your files: " + err.message);
-      }
+      await updateFileListing();
+      await downloadResultsFile();
     })();
-  }, [
-    testID,
-    unitResult.data?.unit?.name,
-    assignmentResult.data?.assignment?.name,
-  ]);
+  }, [updateFileListing, downloadResultsFile]);
 
   if (testResult.fetching || unitResult.fetching || assignmentResult.fetching)
     return <p>Loading...</p>;
@@ -116,13 +135,18 @@ const TestPage: NextPage = () => {
         <Button variant="contained" component="label" onClick={uploadFile}>
           Upload File
         </Button>
-        <Button
-          variant="contained"
-          component="label"
-          onClick={() => runTest({ testID: testID as string })}
-        >
-          Run Test
-        </Button>
+        {/* Show a spinner */}
+        <Box display="flex">
+          <Button
+            style={{ marginRight: "1rem" }}
+            variant="contained"
+            component="label"
+            onClick={() => runTest({ testID: testID as string })}
+          >
+            Run Test
+          </Button>
+          {runTestState.fetching && <CircularProgress />}
+        </Box>
       </div>
       <CustomList
         items={
@@ -134,12 +158,10 @@ const TestPage: NextPage = () => {
           }) ?? []
         }
       />
+
       {unitResult.data?.unit?.name &&
         assignmentResult.data?.assignment?.name && (
-          <TestTable
-            unitName={unitResult.data?.unit?.name || ""}
-            assignmentName={assignmentResult.data?.assignment?.name || ""}
-          />
+          <TestTable rows={resultRows || []} />
         )}
     </>
   );
