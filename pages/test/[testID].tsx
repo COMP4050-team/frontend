@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
-import { useQuery } from "urql";
+import { useMutation, useQuery } from "urql";
 import {
   GetAssignmentDocument,
   GetTestDocument,
   GetUnitDocument,
+  RunTestDocument,
 } from "../../gql/generated/graphql";
 import { useRouter } from "next/router";
 import { Button, Typography } from "@mui/material";
@@ -28,6 +29,7 @@ const TestPage: NextPage = () => {
     query: GetUnitDocument,
     variables: { id: testResult.data?.test?.unitID || "" },
   });
+  const [, runTest] = useMutation(RunTestDocument);
   const [files, setFiles] = useState<string[] | undefined>([]);
 
   // Set the AWS Region
@@ -98,15 +100,30 @@ const TestPage: NextPage = () => {
       <Typography align="center" variant="h3">
         {testResult.data?.test?.name}
       </Typography>
-
-      <Button variant="contained" component="label">
-        Choose File
-        <input id="fileupload" type="file" hidden />
-      </Button>
-      <Button variant="contained" component="label" onClick={uploadFile}>
-        Upload File
-      </Button>
-
+      <div
+        style={{
+          display: "grid",
+          maxWidth: "fit-content",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          margin: "1rem",
+          gap: "2rem",
+        }}
+      >
+        <Button variant="contained" component="label">
+          Choose File
+          <input id="fileupload" type="file" hidden />
+        </Button>
+        <Button variant="contained" component="label" onClick={uploadFile}>
+          Upload File
+        </Button>
+        <Button
+          variant="contained"
+          component="label"
+          onClick={() => runTest({ testID: testID as string })}
+        >
+          Run Test
+        </Button>
+      </div>
       <CustomList
         items={
           files?.map((file) => {
@@ -117,10 +134,13 @@ const TestPage: NextPage = () => {
           }) ?? []
         }
       />
-
-      {testResult.data?.test?.assignmentID && (
-        <TestTable assignmentID={testResult.data?.test?.assignmentID} />
-      )}
+      {unitResult.data?.unit?.name &&
+        assignmentResult.data?.assignment?.name && (
+          <TestTable
+            unitName={unitResult.data?.unit?.name || ""}
+            assignmentName={assignmentResult.data?.assignment?.name || ""}
+          />
+        )}
     </>
   );
 };
