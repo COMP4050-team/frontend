@@ -129,7 +129,7 @@ const UnitsPage: NextPage = () => {
             </Grid>
           </Toolbar>
         </AppBar>
-        <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
+        <div style={{ margin: "2rem 5rem" }}>
           <CustomList
             items={
               units
@@ -149,7 +149,7 @@ const UnitsPage: NextPage = () => {
                 }) ?? []
             }
           />
-        </Typography>
+        </div>
       </Paper>
     </>
   );
