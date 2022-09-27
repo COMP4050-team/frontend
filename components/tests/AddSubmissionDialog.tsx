@@ -1,6 +1,4 @@
-import { CognitoIdentityClient } from "@aws-sdk/client-cognito-identity";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
+import { PutObjectCommand } from "@aws-sdk/client-s3";
 import {
   Button,
   Dialog,
@@ -10,12 +8,18 @@ import {
   DialogTitle,
   TextField,
 } from "@mui/material";
-import React, { useMemo, useState } from "react";
-import { OperationContext, useMutation } from "urql";
-import { CreateSubmissionDocument } from "../../gql/generated/graphql";
+import React, { useState } from "react";
+import { OperationContext, useMutation, useQuery } from "urql";
+import {
+  CreateSubmissionDocument,
+  GetUnitDocument,
+} from "../../gql/generated/graphql";
+import { s3Service } from "../../services/s3";
 
 interface Props {
   assignmentID: string;
+  assignmentName: string;
+  unitID: string;
   open?: boolean;
   onClose(): void;
   // eslint-disable-next-line no-unused-vars
@@ -24,30 +28,21 @@ interface Props {
 
 const AddSubmissionDialog: React.FC<Props> = ({
   assignmentID,
+  assignmentName,
+  unitID,
   open,
   onClose,
   reexecuteQuery,
 }) => {
   // Set the AWS Region
-  const REGION = "ap-southeast-2";
   const UPLOADS_BUCKET_NAME = "uploads-76078f4";
 
   const [, createSubmission] = useMutation(CreateSubmissionDocument);
   const [newSubmissionStudentID, setNewSubmissionStudentID] = useState("");
-
-  // Initialize the Amazon Cognito credentials provider
-  // TODO: Factor this out into a s3 service
-  const s3 = useMemo(
-    () =>
-      new S3Client({
-        region: REGION,
-        credentials: fromCognitoIdentityPool({
-          client: new CognitoIdentityClient({ region: REGION }),
-          identityPoolId: "ap-southeast-2:46ec7d87-6d8a-494f-a5c0-f067f9c45e0b", // IDENTITY_POOL_ID
-        }),
-      }),
-    []
-  );
+  const [unitResult] = useQuery({
+    query: GetUnitDocument,
+    variables: { id: unitID },
+  });
 
   const handleAddSubmission = async () => {
     await uploadFile();
@@ -73,25 +68,25 @@ const AddSubmissionDialog: React.FC<Props> = ({
       "fileupload"
     ) as HTMLInputElement;
 
-    const uploadedFile = fileUpload.files ? fileUpload.files[0] : null;
-    console.log(uploadedFile);
-
-    if (!uploadedFile) {
+    if (!fileUpload.files) {
       alert("No file selected");
       return;
     }
 
-    const uploadParams = {
-      Bucket: UPLOADS_BUCKET_NAME,
-      Key: `projects/${assignmentID}/${newSubmissionStudentID}/Main.java`,
-      Body: uploadedFile,
-    };
+    for (const file of fileUpload.files) {
+      const relativePath = file.webkitRelativePath;
 
-    try {
-      await s3.send(new PutObjectCommand(uploadParams));
-      alert("Successfully uploaded file.");
-    } catch (err: any) {
-      return alert("There was an error uploading your file: " + err.message);
+      const uploadParams = {
+        Bucket: UPLOADS_BUCKET_NAME,
+        Key: `${unitResult.data?.unit?.name}/${assignmentName}/Projects/${relativePath}`,
+        Body: file,
+      };
+
+      try {
+        await s3Service.send(new PutObjectCommand(uploadParams));
+      } catch (err: any) {
+        return alert("There was an error uploading your file: " + err.message);
+      }
     }
   };
 
@@ -122,7 +117,16 @@ const AddSubmissionDialog: React.FC<Props> = ({
 
         <Button variant="contained" component="label">
           Choose File
-          <input id="fileupload" type="file" hidden />
+          <input
+            id="fileupload"
+            type="file"
+            // @ts-ignore-next-line
+            // eslint-disable-next-line react/no-unknown-property
+            directory=""
+            // eslint-disable-next-line react/no-unknown-property
+            webkitdirectory=""
+            hidden
+          />
         </Button>
       </DialogContent>
       <DialogActions>
