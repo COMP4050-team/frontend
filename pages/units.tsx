@@ -14,7 +14,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
@@ -27,8 +27,14 @@ const UnitsPage: NextPage = () => {
   const [result, reexecuteQuery] = useQuery({
     query: GetUnitsDocument,
   });
+  const [units, setUnits] = useState(result.data?.units);
+  const [searchQuery, setSearchQuery] = useState("");
   const [showAddUnitDialog, setShowAddUnitDialog] = useState(false);
   const [newUnitName, setNewUnitName] = useState("");
+
+  useEffect(() => {
+    setUnits(result.data?.units);
+  }, [result.data?.units]);
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;
@@ -102,6 +108,7 @@ const UnitsPage: NextPage = () => {
                     sx: { fontSize: "default" },
                   }}
                   variant="standard"
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </Grid>
               <Grid item>
@@ -125,12 +132,21 @@ const UnitsPage: NextPage = () => {
         <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
           <CustomList
             items={
-              result.data?.units.map((unit) => {
-                return {
-                  text: unit.name,
-                  href: `/unit/${unit.id}`,
-                };
-              }) ?? []
+              units
+                ?.filter((unit) => {
+                  if (searchQuery === "") {
+                    return unit;
+                  }
+                  return unit.name
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase());
+                })
+                .map((unit) => {
+                  return {
+                    text: unit.name,
+                    href: `/unit/${unit.id}`,
+                  };
+                }) ?? []
             }
           />
         </Typography>
