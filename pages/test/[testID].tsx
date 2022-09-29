@@ -67,7 +67,6 @@ const TestPage: NextPage = () => {
       console.log("Successfully uploaded file.");
 
       await updateFileListing();
-      await downloadResultsFile();
     } catch (err: any) {
       return alert("There was an error uploading your file: " + err.message);
     }
@@ -89,6 +88,10 @@ const TestPage: NextPage = () => {
   }, [assignmentResult.data?.assignment?.name, unitResult.data?.unit?.name]);
 
   const downloadResultsFile = useCallback(async () => {
+    if (runTestState.fetching) {
+      return;
+    }
+
     const unitName = unitResult.data?.unit?.name;
     const assignmentName = assignmentResult.data?.assignment?.name;
 
@@ -100,7 +103,11 @@ const TestPage: NextPage = () => {
         setResultRows(data.rows);
       }
     }
-  }, [unitResult.data?.unit?.name, assignmentResult.data?.assignment?.name]);
+  }, [
+    unitResult.data?.unit?.name,
+    assignmentResult.data?.assignment?.name,
+    runTestState.fetching,
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -141,7 +148,11 @@ const TestPage: NextPage = () => {
             style={{ marginRight: "1rem" }}
             variant="contained"
             component="label"
-            onClick={() => runTest({ testID: testID as string })}
+            onClick={() =>
+              runTest({ testID: testID as string }).then(() => {
+                downloadResultsFile();
+              })
+            }
           >
             Run Test
           </Button>
