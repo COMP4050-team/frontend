@@ -2,6 +2,8 @@ mutation createTest($test: NewTest!) {
   createTest(input: $test) {
     id
     name
-    assignmentID
+    assignment {
+      id
+    }
   }
 }
