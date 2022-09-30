@@ -16,6 +16,8 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
+  Breadcrumbs,
+  Button,
   CssBaseline,
   Divider,
   Drawer,
@@ -26,10 +28,12 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import useIsLoggedIn from "../hooks/isLoggedIn";
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
+import { Node } from "../state/features/navbar/navbarSlice";
 
 const drawerWidth = 240;
 
@@ -87,6 +91,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export const ResponsiveDrawer: React.FC<AppBarProps> = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const navbar = useSelector((state: RootState) => state.navbar.value);
   const isLoggedin = useIsLoggedIn();
 
   const handleDrawerOpen = () => {
@@ -144,9 +149,13 @@ export const ResponsiveDrawer: React.FC<AppBarProps> = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            ProTest
-          </Typography>
+          <Breadcrumbs>
+            {navbar.map((node: Node) => (
+              <Link key={node.href} href={node.href}>
+                <Button style={{ color: "white" }}>{node.value}</Button>
+              </Link>
+            ))}
+          </Breadcrumbs>
         </Toolbar>
       </AppBar>
       <Drawer

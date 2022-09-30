@@ -13,6 +13,8 @@ import { CustomList } from "../../components/CustomList";
 import { useCallback, useEffect, useState } from "react";
 import TestTable from "../../components/tests/TestTable";
 import { downloadFile, IS3DataRows, s3Service } from "../../services/s3";
+import { setNodes } from "../../state/features/navbar/navbarSlice";
+import { useDispatch } from "react-redux";
 
 const TestPage: NextPage = () => {
   const router = useRouter();
@@ -23,15 +25,42 @@ const TestPage: NextPage = () => {
   });
   const [assignmentResult] = useQuery({
     query: GetAssignmentDocument,
-    variables: { id: testResult.data?.test?.assignmentID || "" },
+    variables: { id: testResult.data?.test?.assignment.id || "" },
   });
   const [unitResult] = useQuery({
     query: GetUnitDocument,
-    variables: { id: testResult.data?.test?.unitID || "" },
+    variables: { id: testResult.data?.test?.unit.id || "" },
   });
   const [runTestState, runTest] = useMutation(RunTestDocument);
   const [files, setFiles] = useState<string[] | undefined>([]);
   const [resultRows, setResultRows] = useState<IS3DataRows>();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (testResult?.data?.test) {
+      dispatch(
+        setNodes([
+          { value: "ProTest", href: "/" },
+          {
+            value: testResult.data.test.unit.name,
+            href: `/unit/${testResult.data.test.unit.id}`,
+          },
+          {
+            value: testResult.data.test.class.name,
+            href: `/class/${testResult.data.test.class.id}`,
+          },
+          {
+            value: testResult.data.test.assignment.name,
+            href: `/assignment/${testResult.data.test.assignment.id}`,
+          },
+          {
+            value: testResult.data.test.name,
+            href: `/test/${testResult.data.test.id}`,
+          },
+        ])
+      );
+    }
+  }, [dispatch, testResult.data?.test]);
 
   // Set the AWS Region
   const UPLOADS_BUCKET_NAME = "uploads-76078f4";

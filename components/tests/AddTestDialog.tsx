@@ -38,7 +38,7 @@ const AddTestDialog: React.FC<Props> = ({
       test: {
         name: newTestName,
         assignmentID,
-        storagePath: `tests/${createTestResult.data?.createTest.assignmentID}/${createTestResult.data?.createTest.id}/${newTestName}`,
+        storagePath: `tests/${createTestResult.data?.createTest.assignment.id}/${createTestResult.data?.createTest.id}/${newTestName}`,
       },
     });
     reexecuteQuery({ requestPolicy: "network-only" });

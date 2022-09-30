@@ -4,10 +4,17 @@ import styles from "../styles/Home.module.css";
 import { useQuery } from "urql";
 import { GetUnitsDocument } from "../gql/generated/graphql";
 import { Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setNodes } from "../state/features/navbar/navbarSlice";
 
 const Home: NextPage = () => {
   const [result] = useQuery({ query: GetUnitsDocument });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setNodes([{ value: "ProTest", href: "/" }]));
+  }, [dispatch]);
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;
