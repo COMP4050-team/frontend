@@ -3,5 +3,6 @@ query getTest($id: ID!) {
     id
     name
     assignmentID
+    unitID
   }
 }

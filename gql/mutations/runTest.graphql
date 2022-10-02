@@ -1,0 +1,3 @@
+mutation runTest($testID: ID!) {
+  runTest(testID: $testID)
+}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { NextPage } from 'next';
 import { useQuery } from 'urql';
 import { GetTestsDocument } from '../gql/generated/graphql';
@@ -77,3 +78,39 @@ const TestFile = ({ studentName, assignment, testsPassed, testsFailed, totalGrad
 };
 
 export default TestsPage;
+=======
+import type { NextPage } from "next";
+import { useQuery } from "urql";
+import { GetTestsDocument } from "../gql/generated/graphql";
+import { CustomList } from "../components/CustomList";
+import { Typography } from "@mui/material";
+
+const TestsPage: NextPage = () => {
+  const [result] = useQuery({
+    query: GetTestsDocument,
+  });
+
+  if (result.fetching) return <p>Loading...</p>;
+  if (result.error) return <p>Error :(</p>;
+
+  return (
+    <>
+      <Typography align="center" variant="h3">
+        Tests
+      </Typography>
+      <CustomList
+        items={
+          result.data?.tests.map((test) => {
+            return {
+              text: test.name,
+              href: `/test/${test.id}`,
+            };
+          }) ?? []
+        }
+      />
+    </>
+  );
+};
+
+export default TestsPage;
+>>>>>>> 6cad824125ea308e21d9059c2044bf9521166950
