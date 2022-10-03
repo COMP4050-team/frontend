@@ -12,13 +12,15 @@ import {
 } from "@mui/material";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useMutation, useQuery } from "urql";
 import { CustomList } from "../../components/CustomList";
 import {
   CreateClassDocument,
   GetUnitDocument,
 } from "../../gql/generated/graphql";
+import { setNodes } from "../../state/features/navbar/navbarSlice";
 
 const UnitPage: NextPage = () => {
   const router = useRouter();
@@ -30,6 +32,21 @@ const UnitPage: NextPage = () => {
   });
   const [showAddClassDialog, setShowAddClassDialog] = useState(false);
   const [newClassName, setNewClassName] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (result.data?.unit?.name) {
+      dispatch(
+        setNodes([
+          { value: "ProTest", href: "/" },
+          {
+            value: result.data.unit.name,
+            href: `/unit/${result.data.unit.id}`,
+          },
+        ])
+      );
+    }
+  }, [dispatch, result]);
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;

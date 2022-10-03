@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
 import { useQuery, useClient } from "urql";
-import {
-  Class,
-  GetClassesDocument,
-  GetUnitDocument,
-} from "../gql/generated/graphql";
+import { GetClassesDocument, GetUnitDocument } from "../gql/generated/graphql";
 import { CustomList } from "../components/CustomList";
 import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setNodes } from "../state/features/navbar/navbarSlice";
 
 const ClassesPage: NextPage = () => {
   const [classesResult] = useQuery({
@@ -15,20 +13,31 @@ const ClassesPage: NextPage = () => {
   });
   const client = useClient();
   const [classesByUnit, setClassesByUnit] = useState<{
-    [unitName: string]: Omit<Class, "assignments">[];
+    [unitName: string]: { id: string; name: string }[];
   }>({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(
+      setNodes([
+        { value: "ProTest", href: "/" },
+        {
+          value: "Classes",
+          href: "/classes",
+        },
+      ])
+    );
+
     classesResult.data?.classes.forEach((c) => {
       let newClassesByUnit = { ...classesByUnit };
 
       // Get the unit name
       client
-        .query(GetUnitDocument, { id: c.unitID })
+        .query(GetUnitDocument, { id: c.unit.id })
         .toPromise()
         .then((result) => {
           if (!result.data?.unit?.name) {
-            console.error("Unit not found", c.unitID);
+            console.error("Unit not found", c.unit.id);
             return;
           }
 
@@ -62,7 +71,7 @@ const ClassesPage: NextPage = () => {
           }
         });
     });
-  }, [classesByUnit, classesResult.data?.classes, client]);
+  }, [dispatch, classesByUnit, classesResult.data?.classes, client]);
 
   if (classesResult.fetching) return <p>Loading...</p>;
   if (classesResult.error) return <p>Error :(</p>;

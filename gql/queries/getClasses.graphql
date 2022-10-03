@@ -2,6 +2,8 @@ query getClasses {
   classes {
     id
     name
-    unitID
+    unit {
+      id
+    }
   }
 }

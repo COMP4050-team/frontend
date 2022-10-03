@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "urql";
 import {
   CreateAssignmentDocument,
   GetClassDocument,
+  GetUnitDocument,
 } from "../../gql/generated/graphql";
 import { useRouter } from "next/router";
 import { CustomList } from "../../components/CustomList";
@@ -21,8 +22,10 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Add } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
+import { useDispatch } from "react-redux";
+import { setNodes } from "../../state/features/navbar/navbarSlice";
 
 const ClassPage: NextPage = () => {
   const router = useRouter();
@@ -31,11 +34,34 @@ const ClassPage: NextPage = () => {
     query: GetClassDocument,
     variables: { id: classID as string },
   });
+  const [unitResult] = useQuery({
+    query: GetUnitDocument,
+    variables: { id: result.data?.class?.unit.id as string },
+  });
   const [, createAssignment] = useMutation(CreateAssignmentDocument);
   const [showAddAssignmentDialog, setShowAddAssignmentDialog] = useState(false);
   const [newAssignmentName, setNewAssignmentName] = useState("");
   const [newAssignmentDueDate, setNewAssignmentDueDate] =
     useState<moment.Moment | null>();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (result.data?.class?.name && unitResult.data?.unit?.name) {
+      dispatch(
+        setNodes([
+          { value: "ProTest", href: "/" },
+          {
+            value: unitResult.data.unit.name,
+            href: `/unit/${unitResult.data.unit.id}`,
+          },
+          {
+            value: result.data.class.name,
+            href: `/class/${result.data.class.id}`,
+          },
+        ])
+      );
+    }
+  }, [dispatch, result.data?.class, unitResult.data?.unit]);
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;

@@ -1,8 +1,14 @@
 query getAssignment($id: ID!) {
   assignment(id: $id) {
     id
-    classID
-    unitID
+    class {
+      id
+      name
+    }
+    unit {
+      id
+      name
+    }
     name
     tests {
       id
