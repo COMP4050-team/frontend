@@ -2,7 +2,17 @@ query getTest($id: ID!) {
   test(id: $id) {
     id
     name
-    assignmentID
-    unitID
+    unit {
+      id
+      name
+    }
+    class {
+      id
+      name
+    }
+    assignment {
+      id
+      name
+    }
   }
 }

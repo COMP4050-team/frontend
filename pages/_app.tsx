@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import {
-  Provider,
+  Provider as UrqlProvider,
   makeOperation,
   createClient,
   cacheExchange,
@@ -12,6 +12,8 @@ import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { ResponsiveDrawer } from "../components/ResponsiveDrawer";
 import { authExchange } from "@urql/exchange-auth";
 import { useEffect, useState } from "react";
+import { store } from "../state/store";
+import { Provider as ReduxProvider } from "react-redux";
 
 const theme = createTheme({
   palette: {
@@ -93,14 +95,16 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     clientInitialised && (
-      <Provider value={client}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ResponsiveDrawer>
-            <Component {...pageProps} />
-          </ResponsiveDrawer>
-        </ThemeProvider>
-      </Provider>
+      <ReduxProvider store={store}>
+        <UrqlProvider value={client}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <ResponsiveDrawer>
+              <Component {...pageProps} />
+            </ResponsiveDrawer>
+          </ThemeProvider>
+        </UrqlProvider>
+      </ReduxProvider>
     )
   );
 }

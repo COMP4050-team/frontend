@@ -21,6 +21,8 @@ import AppBar from "@mui/material/AppBar";
 import Paper from "@mui/material/Paper";
 import Tooltip from "@mui/material/Tooltip";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import { setNodes } from "../state/features/navbar/navbarSlice";
+import { useDispatch } from "react-redux";
 
 const UnitsPage: NextPage = () => {
   const [, createUnit] = useMutation(CreateUnitDocument);
@@ -31,10 +33,17 @@ const UnitsPage: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAddUnitDialog, setShowAddUnitDialog] = useState(false);
   const [newUnitName, setNewUnitName] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setUnits(result.data?.units);
-  }, [result.data?.units]);
+    dispatch(
+      setNodes([
+        { value: "ProTest", href: "/" },
+        { value: "Units", href: "/units" },
+      ])
+    );
+  }, [dispatch, result.data?.units]);
 
   if (result.fetching) return <p>Loading...</p>;
   if (result.error) return <p>Error :(</p>;
