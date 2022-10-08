@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
-import AuthForm from "../components/AuthForm";
+import SignUp from "../components/SignUp";
 
 const Register: NextPage = () => {
   return (
     <div className={styles.container}>
-      <AuthForm isRegister />
+      <SignUp />
     </div>
   );
 };
