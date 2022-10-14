@@ -25,7 +25,7 @@ const AddTestDialog: React.FC<Props> = ({
   onClose,
   reexecuteQuery,
 }) => {
-  const [createTestResult, createTest] = useMutation(CreateTestDocument);
+  const [, createTest] = useMutation(CreateTestDocument);
   const [newTestName, setNewTestName] = useState("");
 
   const handleAddTest = async () => {
@@ -38,7 +38,6 @@ const AddTestDialog: React.FC<Props> = ({
       test: {
         name: newTestName,
         assignmentID,
-        storagePath: `tests/${createTestResult.data?.createTest.assignment.id}/${createTestResult.data?.createTest.id}/${newTestName}`,
       },
     });
     reexecuteQuery({ requestPolicy: "network-only" });
