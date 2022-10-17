@@ -106,7 +106,6 @@ export type NewSubmission = {
 export type NewTest = {
   assignmentID: Scalars['ID'];
   name: Scalars['String'];
-  storagePath: Scalars['String'];
 };
 
 export type NewUnit = {

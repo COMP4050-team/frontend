@@ -87,7 +87,7 @@ const TestPage: NextPage = () => {
 
     const uploadParams = {
       Bucket: UPLOADS_BUCKET_NAME,
-      Key: `${unitResult.data?.unit?.name}/${assignmentResult.data?.assignment?.name}/Tests/Test.java`,
+      Key: `${unitResult.data?.unit?.name}/${assignmentResult.data?.assignment?.name}/Tests/${testResult.data.test.id}/Test.java`,
       Body: uploadedFile,
     };
 
