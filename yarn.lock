@@ -148,10 +148,10 @@
   dependencies:
     tslib "^2.3.1"
 
-"@aws-sdk/client-cognito-identity@3.194.0":
-  version "3.194.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity/-/client-cognito-identity-3.194.0.tgz#be6c49ad0317d37c4f412aec2f862a97ff65e306"
-  integrity sha512-khDgkrrSC/2PFN7Sb8sUsvt6QTsU3s9vcizFULWc8H5OO58tTdzkoKuAa5XMVbSRQnnl6iQ4uv6bBglCC+OfSw==
+"@aws-sdk/client-cognito-identity@3.195.0":
+  version "3.195.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity/-/client-cognito-identity-3.195.0.tgz#d9c1cc43aa77caa8bed595bb59d0054c7266165f"
+  integrity sha512-yQFCoGqGcHvyeS3rL5H5L2I6m9XFWMLaK1/iALgYsITfmig0JzlzGH/ubStEiZMsQ8lhdWmUcOyhCK4+Bx9l0w==
   dependencies:
     "@aws-crypto/sha256-browser" "2.0.0"
     "@aws-crypto/sha256-js" "2.0.0"
@@ -162,6 +162,7 @@
     "@aws-sdk/hash-node" "3.193.0"
     "@aws-sdk/invalid-dependency" "3.193.0"
     "@aws-sdk/middleware-content-length" "3.193.0"
+    "@aws-sdk/middleware-endpoint" "3.193.0"
     "@aws-sdk/middleware-host-header" "3.193.0"
     "@aws-sdk/middleware-logger" "3.193.0"
     "@aws-sdk/middleware-recursion-detection" "3.193.0"
@@ -182,6 +183,7 @@
     "@aws-sdk/util-body-length-node" "3.188.0"
     "@aws-sdk/util-defaults-mode-browser" "3.193.0"
     "@aws-sdk/util-defaults-mode-node" "3.193.0"
+    "@aws-sdk/util-endpoints" "3.194.0"
     "@aws-sdk/util-user-agent-browser" "3.193.0"
     "@aws-sdk/util-user-agent-node" "3.193.0"
     "@aws-sdk/util-utf8-browser" "3.188.0"
@@ -340,12 +342,12 @@
     "@aws-sdk/util-middleware" "3.193.0"
     tslib "^2.3.1"
 
-"@aws-sdk/credential-provider-cognito-identity@3.194.0":
-  version "3.194.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-cognito-identity/-/credential-provider-cognito-identity-3.194.0.tgz#a3f98b2381b95f372d5cd88a2cbcfe991b3bcc62"
-  integrity sha512-AAtnTap4SS0aDuLB8NsWuvAkbaCX8kh6QG+S4+hziPq3+OZtYq34QM8j52ojGyB99VU4dhJmxoExMayLOSTIJg==
+"@aws-sdk/credential-provider-cognito-identity@3.195.0":
+  version "3.195.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-cognito-identity/-/credential-provider-cognito-identity-3.195.0.tgz#7ce5b89dcdcabdff298b7c506c0f79c808b4ecef"
+  integrity sha512-nlIk6kx7745gnKybvu6yck+OHrmtqFxaxob6zLelofDEHJGbAkN+CAeTy3FnN7qVNtz9hC42+HOqz9eCRjyZVQ==
   dependencies:
-    "@aws-sdk/client-cognito-identity" "3.194.0"
+    "@aws-sdk/client-cognito-identity" "3.195.0"
     "@aws-sdk/property-provider" "3.193.0"
     "@aws-sdk/types" "3.193.0"
     tslib "^2.3.1"
@@ -1723,7 +1725,18 @@
     auto-bind "~4.0.0"
     tslib "~2.4.0"
 
-"@graphql-codegen/typescript@2.7.5", "@graphql-codegen/typescript@^2.7.5":
+"@graphql-codegen/typescript@2.8.0":
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.8.0.tgz#c4a20cd88f301bed094b53c982cf85bceda1b78c"
+  integrity sha512-atQ6NFfMmoknJi0QdVSozPugKcgeJB6t1/cVskbhVtX8tAEFFLjl6H23mpz3t35AH6aGWtvx2LCjUSxHI6P6xA==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^2.6.2"
+    "@graphql-codegen/schema-ast" "^2.5.1"
+    "@graphql-codegen/visitor-plugin-common" "2.13.0"
+    auto-bind "~4.0.0"
+    tslib "~2.4.0"
+
+"@graphql-codegen/typescript@^2.7.5":
   version "2.7.5"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.7.5.tgz#00da3b7dd51cce49d95531556988818568c5d87e"
   integrity sha512-NZMViINr0KEH+DgtOE3BDWkdrisX7cz3/+m6M73Sa2cMM1udTTCpLbNqFIHRmGl1UyfwjdZB32YoF/fxshjV/Q==
@@ -2520,10 +2533,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react-dom@18.0.6":
-  version "18.0.6"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.6.tgz#36652900024842b74607a17786b6662dd1e103a1"
-  integrity sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==
+"@types/react-dom@18.0.7":
+  version "18.0.7"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.0.7.tgz#ee7cf8ec4e6977e3f0a7b1d38bd89c75aa2aec28"
+  integrity sha512-HaXc+BbqAZE1RdsK3tC8SbkFy6UL2xF76lT9rQs5JkPrJg3rWA3Ou/Lhw3YJQzEDkBpmJ79nBsfnd05WrBd2QQ==
   dependencies:
     "@types/react" "*"
 
@@ -2548,10 +2561,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@18.0.21":
+"@types/react@*":
   version "18.0.21"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.21.tgz#b8209e9626bb00a34c76f55482697edd2b43cc67"
   integrity sha512-7QUCOxvFgnD5Jk8ZKlUAhVcRj7GuJRjnjjiY/IUBWKgOlnvDvTMLD4RTF7NPyVmbRhNrbomZiOepg7M/2Kj1mA==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@18.0.22":
+  version "18.0.22"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.22.tgz#97782d995d999617de116cf61f437f1351036fc7"
+  integrity sha512-4yWc5PyCkZN8ke8K9rQHkTXxHIWHxLzzW6RI1kXVoepkD3vULpKzC2sDtAMKn78h92BRYuzf+7b/ms7ajE6hFw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
