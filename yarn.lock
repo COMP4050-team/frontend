@@ -156,7 +156,7 @@
   dependencies:
     tslib "^2.3.1"
 
-"@aws-sdk/client-cognito-identity@3.190.0", "@aws-sdk/client-cognito-identity@^3.183.0":
+"@aws-sdk/client-cognito-identity@3.190.0":
   version "3.190.0"
   resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity/-/client-cognito-identity-3.190.0.tgz#0d851474e8f453fa9564b0a94251572e915b1b5b"
   integrity sha512-AmvSMlnd3nfAfJqElc9d0qC4Fl1fig8rXzjd7DC38DSpDBfuBfssZyh3dBZ0/eOdALFy/sVwiVnea9FRLbXC4Q==
@@ -192,6 +192,46 @@
     "@aws-sdk/util-defaults-mode-node" "3.190.0"
     "@aws-sdk/util-user-agent-browser" "3.190.0"
     "@aws-sdk/util-user-agent-node" "3.190.0"
+    "@aws-sdk/util-utf8-browser" "3.188.0"
+    "@aws-sdk/util-utf8-node" "3.188.0"
+    tslib "^2.3.1"
+
+"@aws-sdk/client-cognito-identity@^3.194.0":
+  version "3.194.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-cognito-identity/-/client-cognito-identity-3.194.0.tgz#be6c49ad0317d37c4f412aec2f862a97ff65e306"
+  integrity sha512-khDgkrrSC/2PFN7Sb8sUsvt6QTsU3s9vcizFULWc8H5OO58tTdzkoKuAa5XMVbSRQnnl6iQ4uv6bBglCC+OfSw==
+  dependencies:
+    "@aws-crypto/sha256-browser" "2.0.0"
+    "@aws-crypto/sha256-js" "2.0.0"
+    "@aws-sdk/client-sts" "3.194.0"
+    "@aws-sdk/config-resolver" "3.193.0"
+    "@aws-sdk/credential-provider-node" "3.193.0"
+    "@aws-sdk/fetch-http-handler" "3.193.0"
+    "@aws-sdk/hash-node" "3.193.0"
+    "@aws-sdk/invalid-dependency" "3.193.0"
+    "@aws-sdk/middleware-content-length" "3.193.0"
+    "@aws-sdk/middleware-host-header" "3.193.0"
+    "@aws-sdk/middleware-logger" "3.193.0"
+    "@aws-sdk/middleware-recursion-detection" "3.193.0"
+    "@aws-sdk/middleware-retry" "3.193.0"
+    "@aws-sdk/middleware-serde" "3.193.0"
+    "@aws-sdk/middleware-signing" "3.193.0"
+    "@aws-sdk/middleware-stack" "3.193.0"
+    "@aws-sdk/middleware-user-agent" "3.193.0"
+    "@aws-sdk/node-config-provider" "3.193.0"
+    "@aws-sdk/node-http-handler" "3.193.0"
+    "@aws-sdk/protocol-http" "3.193.0"
+    "@aws-sdk/smithy-client" "3.193.0"
+    "@aws-sdk/types" "3.193.0"
+    "@aws-sdk/url-parser" "3.193.0"
+    "@aws-sdk/util-base64-browser" "3.188.0"
+    "@aws-sdk/util-base64-node" "3.188.0"
+    "@aws-sdk/util-body-length-browser" "3.188.0"
+    "@aws-sdk/util-body-length-node" "3.188.0"
+    "@aws-sdk/util-defaults-mode-browser" "3.193.0"
+    "@aws-sdk/util-defaults-mode-node" "3.193.0"
+    "@aws-sdk/util-user-agent-browser" "3.193.0"
+    "@aws-sdk/util-user-agent-node" "3.193.0"
     "@aws-sdk/util-utf8-browser" "3.188.0"
     "@aws-sdk/util-utf8-node" "3.188.0"
     tslib "^2.3.1"
