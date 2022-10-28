@@ -12,7 +12,7 @@ import { ListObjectsCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { CustomList } from "../../components/CustomList";
 import { useCallback, useEffect, useState } from "react";
 import TestTable from "../../components/tests/TestTable";
-import { downloadFile, IS3DataRows, s3Service } from "../../services/s3";
+import { downloadFile, IS3DataResult, s3Service } from "../../services/s3";
 import { setNodes } from "../../state/features/navbar/navbarSlice";
 import { useDispatch } from "react-redux";
 
@@ -33,7 +33,7 @@ const TestPage: NextPage = () => {
   });
   const [runTestState, runTest] = useMutation(RunTestDocument);
   const [files, setFiles] = useState<string[] | undefined>([]);
-  const [resultRows, setResultRows] = useState<IS3DataRows>();
+  const [resultRows, setResultRows] = useState<IS3DataResult[]>();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const TestPage: NextPage = () => {
         `${unitName}/${assignmentName}/Results/result.json`
       );
       if (data !== null) {
-        setResultRows(data.rows);
+        setResultRows(data.results);
       }
     }
   }, [
