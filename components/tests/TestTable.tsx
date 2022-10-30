@@ -1,10 +1,10 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { IS3DataRows } from "../../services/s3";
+import { IS3DataResult } from "../../services/s3";
 
 interface Props {
-  rows: IS3DataRows;
+  rows: IS3DataResult[];
 }
 
 export const TestTable = ({ rows }: Props) => {
@@ -17,15 +17,24 @@ export const TestTable = ({ rows }: Props) => {
     >
       <DataGrid
         columns={[
-          { field: "Test", headerName: "Result", flex: 1 },
-          { field: "SID", headerName: "Student ID", flex: 1 },
-          { field: "Name", headerName: "Student Name", flex: 1 },
+          { field: "student_id", headerName: "Student ID", flex: 1 },
+          { field: "student_name", headerName: "Student Name", flex: 1 },
+          { field: "failed", headerName: "Failed", flex: 1 },
+          { field: "passed", headerName: "Passed", flex: 1 },
         ]}
         rows={
           rows?.map((row, i) => {
             return {
               id: i,
               ...row,
+              passed: row.tests
+                .filter((test) => test.passed)
+                .map((test) => test.name)
+                .join(", "),
+              failed: row.tests
+                .filter((test) => !test.passed)
+                .map((test) => test.name)
+                .join(", "),
             };
           }) || []
         }

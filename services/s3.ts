@@ -15,8 +15,7 @@ export const s3Service = new S3Client({
 });
 
 export interface IS3Data {
-  columns: IS3DataColumns;
-  rows: IS3DataRows;
+  results: IS3DataResult[];
 }
 
 export type IS3DataColumns = {
@@ -24,11 +23,18 @@ export type IS3DataColumns = {
   headerName: string;
   width: number;
 }[];
-export type IS3DataRows = {
-  SID: string;
-  Test: string;
-  Name: string;
-}[];
+
+export interface IS3DataResultTest {
+  name: string;
+  passed: boolean;
+  message: string;
+}
+
+export interface IS3DataResult {
+  student_id: string;
+  student_name: string;
+  tests: IS3DataResultTest[];
+}
 
 export const downloadFile = async (s3Key: string): Promise<IS3Data | null> => {
   try {

@@ -11,10 +11,10 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { ListObjectsCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { CustomList } from "../../components/CustomList";
 import { useCallback, useEffect, useState } from "react";
-import TestTable from "../../components/tests/TestTable";
-import { downloadFile, IS3DataRows, s3Service } from "../../services/s3";
+import { downloadFile, IS3DataResult, s3Service } from "../../services/s3";
 import { setNodes } from "../../state/features/navbar/navbarSlice";
 import { useDispatch } from "react-redux";
+import StudentTestResult from "../../components/tests/StudentTestResult";
 
 const TestPage: NextPage = () => {
   const router = useRouter();
@@ -33,7 +33,7 @@ const TestPage: NextPage = () => {
   });
   const [runTestState, runTest] = useMutation(RunTestDocument);
   const [files, setFiles] = useState<string[] | undefined>([]);
-  const [resultRows, setResultRows] = useState<IS3DataRows>();
+  const [resultRows, setResultRows] = useState<IS3DataResult[]>();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -129,7 +129,7 @@ const TestPage: NextPage = () => {
         `${unitName}/${assignmentName}/Results/result.json`
       );
       if (data !== null) {
-        setResultRows(data.rows);
+        setResultRows(data.results);
       }
     }
   }, [
@@ -199,10 +199,9 @@ const TestPage: NextPage = () => {
         }
       />
 
-      {unitResult.data?.unit?.name &&
-        assignmentResult.data?.assignment?.name && (
-          <TestTable rows={resultRows || []} />
-        )}
+      {resultRows?.map((row) => (
+        <StudentTestResult key={row.student_id} testResult={row} />
+      ))}
     </>
   );
 };
