@@ -58,13 +58,11 @@ const StudentTestResult: React.FC<Props> = ({ testResult }) => {
                 ></div>
               </Tooltip>
               <Dialog
-                // fullScreen
                 open={dialogOpen}
                 onClose={() => {
                   setDialogOpen(false);
                   setSelectedTest(null);
                 }}
-                // TransitionComponent={Transition}
               >
                 <div className="p-4">
                   <Typography variant="h5" component="div">
