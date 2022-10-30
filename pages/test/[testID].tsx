@@ -34,6 +34,7 @@ const TestPage: NextPage = () => {
   const [runTestState, runTest] = useMutation(RunTestDocument);
   const [files, setFiles] = useState<string[] | undefined>([]);
   const [resultRows, setResultRows] = useState<IS3DataResult[]>();
+  const [checkingS3, setCheckingS3] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -116,32 +117,40 @@ const TestPage: NextPage = () => {
     }
   }, [assignmentResult.data?.assignment?.name, unitResult.data?.unit?.name]);
 
-  const downloadResultsFile = useCallback(async () => {
-    if (runTestState.fetching) {
-      return;
-    }
-
-    const unitName = unitResult.data?.unit?.name;
-    const assignmentName = assignmentResult.data?.assignment?.name;
-
-    if (unitName && assignmentName) {
-      const data = await downloadFile(
-        `${unitName}/${assignmentName}/Results/result.json`
-      );
-      if (data !== null) {
-        setResultRows(data.results);
+  const downloadResultsFile = useCallback(
+    async (intervalID: NodeJS.Timer | null) => {
+      if (runTestState.fetching) {
+        return;
       }
-    }
-  }, [
-    unitResult.data?.unit?.name,
-    assignmentResult.data?.assignment?.name,
-    runTestState.fetching,
-  ]);
+
+      const unitName = unitResult.data?.unit?.name;
+      const assignmentName = assignmentResult.data?.assignment?.name;
+
+      if (unitName && assignmentName) {
+        const data = await downloadFile(
+          `${unitName}/${assignmentName}/Results/result.json`
+        );
+        if (data !== null) {
+          setResultRows(data.results);
+          setCheckingS3(false);
+
+          if (intervalID) {
+            clearInterval(intervalID);
+          }
+        }
+      }
+    },
+    [
+      unitResult.data?.unit?.name,
+      assignmentResult.data?.assignment?.name,
+      runTestState.fetching,
+    ]
+  );
 
   useEffect(() => {
     (async () => {
       await updateFileListing();
-      await downloadResultsFile();
+      await downloadResultsFile(null);
     })();
   }, [updateFileListing, downloadResultsFile]);
 
@@ -177,15 +186,20 @@ const TestPage: NextPage = () => {
             style={{ marginRight: "1rem" }}
             variant="contained"
             component="label"
-            onClick={() =>
+            onClick={() => {
+              setCheckingS3(true);
+
               runTest({ testID: testID as string }).then(() => {
-                downloadResultsFile();
-              })
-            }
+                // Try to download the results file every 5 seconds
+                let intervalID = setInterval(() => {
+                  downloadResultsFile(intervalID);
+                }, 5000);
+              });
+            }}
           >
             Run Test
           </Button>
-          {runTestState.fetching && <CircularProgress />}
+          {checkingS3 && <CircularProgress />}
         </Box>
       </div>
       <CustomList
