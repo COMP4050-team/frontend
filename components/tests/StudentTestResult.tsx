@@ -37,12 +37,18 @@ const StudentTestResult: React.FC<Props> = ({ testResult }) => {
         </div>
         <Grid container gap={1} columns={testResult.tests.length} marginTop={2}>
           {testResult.tests.map((test) => (
-            <Grid item key={test.name}>
+            <Grid
+              item
+              key={test.name}
+              sx={{ cursor: test.passed ? "auto" : "pointer" }}
+            >
               <Tooltip
                 title={test.name}
                 onClick={() => {
-                  setSelectedTest(test);
-                  setDialogOpen(true);
+                  if (!test.passed) {
+                    setSelectedTest(test);
+                    setDialogOpen(true);
+                  }
                 }}
               >
                 <div
