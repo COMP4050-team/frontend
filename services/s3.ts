@@ -23,15 +23,18 @@ export type IS3DataColumns = {
   headerName: string;
   width: number;
 }[];
-export type IS3DataResult = {
+
+export interface IS3DataResultTest {
+  name: string;
+  passed: boolean;
+  message: string;
+}
+
+export interface IS3DataResult {
   student_id: string;
   student_name: string;
-  tests: {
-    name: string;
-    passed: boolean;
-    message: string;
-  }[];
-};
+  tests: IS3DataResultTest[];
+}
 
 export const downloadFile = async (s3Key: string): Promise<IS3Data | null> => {
   try {
